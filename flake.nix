@@ -10,16 +10,17 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-cask }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-cask
+    , home-manager }:
     let
       configuration = { pkgs, ... }: {
         imports = [
-          (import ./system.nix { inherit self; inherit pkgs; })
-          (import ./packages.nix { inherit pkgs; })
+          (import ./system.nix { inherit self pkgs; })
           ./homebrew.nix
-          ./home.nix
         ];
 
         # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
@@ -31,12 +32,12 @@
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";
 
-
         # The platform the configuration will be used on.
         nixpkgs.hostPlatform = "aarch64-darwin";
         nixpkgs.config.allowUnfree = true;
 
 
+        programs.zsh.enable = true;
       };
     in {
       # Build darwin flake using:
@@ -52,7 +53,16 @@
               taps = { "homebrew/homebrew-cask" = homebrew-cask; };
             };
           }
+
           configuration
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              users.joseph = {
+                imports = [ ./home.nix ];
+              };
+            };
+          }
         ];
       };
 
