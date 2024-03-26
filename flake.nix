@@ -17,9 +17,14 @@
           pkgs.git
           pkgs.vim
           pkgs.gh
+          pkgs.slack
+          pkgs.discord
+          pkgs.raycast
         ];
 
       security.pam.enableSudoTouchIdAuth = true;
+
+      # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
 
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
@@ -44,6 +49,7 @@
         dock.orientation = "left";
         dock.persistent-apps = [
           "/Applications/Safari.app"
+          "/Applications/Messages.app"
           "/System/Applications/Utilities/Terminal.app"
         ];
         NSGlobalDomain."com.apple.swipescrolldirection" = false;
@@ -51,13 +57,17 @@
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
+      nixpkgs.config.allowUnfree = true;
+
     };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."Josephs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+      modules = [
+        configuration
+      ];
     };
 
     # Expose the package set, including overlays, for convenience.
