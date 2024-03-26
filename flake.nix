@@ -18,12 +18,8 @@
     , home-manager }:
     let
       configuration = { pkgs, ... }: {
-        imports = [
-          (import ./system.nix { inherit self pkgs; })
-          ./homebrew.nix
-        ];
-
-        # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
+        imports =
+          [ (import ./system.nix { inherit self pkgs; }) ./homebrew.nix ];
 
         # Auto upgrade nix package and the daemon service.
         services.nix-daemon.enable = true;
@@ -36,8 +32,12 @@
         nixpkgs.hostPlatform = "aarch64-darwin";
         nixpkgs.config.allowUnfree = true;
 
-
         programs.zsh.enable = true;
+
+        users.users.joseph = {
+          home = "/Users/joseph";
+          shell = pkgs.zsh;
+        };
       };
     in {
       # Build darwin flake using:
@@ -56,13 +56,7 @@
 
           configuration
           home-manager.darwinModules.home-manager
-          {
-            home-manager = {
-              users.joseph = {
-                imports = [ ./home.nix ];
-              };
-            };
-          }
+          { home-manager = { users.joseph.imports = [ ./home.nix ]; }; }
         ];
       };
 
