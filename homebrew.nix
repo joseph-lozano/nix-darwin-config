@@ -19,6 +19,7 @@ _: {
       "iterm2"
       "raycast"
       "rectangle-pro"
+      "setapp"
       "slack"
       "spotify"
       "visual-studio-code"
