@@ -14,6 +14,7 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ 
+          pkgs.git
           pkgs.vim
           pkgs.gh
         ];
