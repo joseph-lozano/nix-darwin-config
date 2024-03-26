@@ -16,21 +16,10 @@
     let
       configuration = { pkgs, ... }: {
         imports = [
-          ./system.nix
-        ];
-        # List packages installed in system profile. To search by name, run:
-        # $ nix-env -qaP | grep wget
-        environment.systemPackages = [
-          pkgs.git
-          pkgs.vim
-          pkgs.nixfmt
-          pkgs.gh
-          pkgs.slack
-          pkgs.discord
-          pkgs.raycast
+          (import ./system.nix { inherit self; })
+          (import ./packages.nix { inherit pkgs; })
         ];
 
-        security.pam.enableSudoTouchIdAuth = true;
 
         homebrew = {
           enable = true;
