@@ -19,6 +19,7 @@
           (import ./system.nix { inherit self; inherit pkgs; })
           (import ./packages.nix { inherit pkgs; })
           ./homebrew.nix
+          ./home.nix
         ];
 
         # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
@@ -35,8 +36,6 @@
         nixpkgs.hostPlatform = "aarch64-darwin";
         nixpkgs.config.allowUnfree = true;
 
-        # Create /etc/zshrc that loads the nix-darwin environment.
-        programs.zsh.enable = true; # default shell on catalina
 
       };
     in {
