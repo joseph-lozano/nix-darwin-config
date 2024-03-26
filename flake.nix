@@ -6,9 +6,13 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-cask }:
   let
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
@@ -29,6 +33,7 @@
         enable = true;
         casks = [
           "1password"
+          "arc"
         ];
       };
 
@@ -79,6 +84,9 @@
             enable = true;
             user = "joseph";
             autoMigrate = true;
+            taps = {
+              "homebrew/homebrew-cask" = homebrew-cask;
+            };
           };
         }
         configuration
