@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./home/git.nix
+    ./home/starship.nix
     # ../home/nvim ../home/starship ../home/zsh 
   ];
   home = {
@@ -24,6 +25,7 @@
       pkgs.less
       pkgs.neofetch
       pkgs.nixfmt
+      pkgs.starship
       pkgs.tree
       pkgs.vim
       pkgs.wget
