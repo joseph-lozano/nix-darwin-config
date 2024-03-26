@@ -14,6 +14,7 @@
     dock.persistent-apps = [
       "/System/Applications/Messages.app"
       "/Applications/iTerm.app"
+      "/Applications/Visual Studio Code.app"
       "/Applications/Arc.app"
       "/Applications/Slack.app"
       "/Applications/Discord.app"
