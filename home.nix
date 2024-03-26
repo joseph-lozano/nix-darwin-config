@@ -2,7 +2,8 @@
   imports = [
     ./home/git.nix
     ./home/starship.nix
-    # ../home/nvim ../home/starship ../home/zsh 
+    ./home/zsh.nix
+    # ../home/nvim 
   ];
   home = {
     stateVersion = "24.05";
