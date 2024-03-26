@@ -41,6 +41,12 @@
 
       system.defaults = {
         dock.autohide = false;
+        dock.orientation = "left";
+        dock.persistent-apps = [
+          "/Applications/Safari.app"
+          "/System/Applications/Utilities/Terminal.app"
+        ];
+        NSGlobalDomain."com.apple.swipescrolldirection" = false;
       };
 
       # The platform the configuration will be used on.
