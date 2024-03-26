@@ -60,10 +60,15 @@
       system.defaults = {
         dock.autohide = false;
         dock.orientation = "left";
+        dock.show-recents = false;
         dock.persistent-apps = [
-          "/Applications/Safari.app"
-          "/Applications/Messages.app"
+          "/System/Applications/Messages.app"
           "/System/Applications/Utilities/Terminal.app"
+          "/Applications/Arc.app"
+          "/Applications/Nix Apps/Slack.app"
+          "/Applications/Nix Apps/Discord.app"
+          "/Applications/Arc.app"
+          "/System/Applications/System Settings.app"
         ];
         NSGlobalDomain."com.apple.swipescrolldirection" = false;
       };
