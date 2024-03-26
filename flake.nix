@@ -18,13 +18,8 @@
         imports = [
           (import ./system.nix { inherit self; })
           (import ./packages.nix { inherit pkgs; })
+          (import ./hombrew.nix)
         ];
-
-
-        homebrew = {
-          enable = true;
-          casks = [ "1password" "arc" ];
-        };
 
         # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
 
