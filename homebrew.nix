@@ -19,8 +19,8 @@ _: {
       "iterm2"
       "obs"
       "raycast"
+      "slack"
       "spotify"
-      "transmission"
       "visual-studio-code"
       "vlc"
     ];

@@ -18,7 +18,7 @@
         imports = [
           (import ./system.nix { inherit self; })
           (import ./packages.nix { inherit pkgs; })
-          (import ./hombrew.nix)
+          ./homebrew.nix
         ];
 
         # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
@@ -37,7 +37,6 @@
         # The platform the configuration will be used on.
         nixpkgs.hostPlatform = "aarch64-darwin";
         nixpkgs.config.allowUnfree = true;
-
 
       };
     in {

@@ -13,11 +13,10 @@
     dock.show-recents = false;
     dock.persistent-apps = [
       "/System/Applications/Messages.app"
-      "/System/Applications/Utilities/Terminal.app"
+      "/Applications/iTerm.app"
       "/Applications/Arc.app"
-      "/Applications/Nix Apps/Slack.app"
-      "/Applications/Nix Apps/Discord.app"
-      "/Applications/Arc.app"
+      "/Applications/Slack.app"
+      "/Applications/Discord.app"
       "/System/Applications/System Settings.app"
     ];
     NSGlobalDomain."com.apple.swipescrolldirection" = false;

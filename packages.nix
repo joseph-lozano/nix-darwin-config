@@ -1,11 +1,8 @@
 { pkgs }: {
   environment.systemPackages = [
-    pkgs.git
-    pkgs.vim
-    pkgs.nixfmt
     pkgs.gh
-    pkgs.slack
-    pkgs.discord
-    pkgs.raycast
+    pkgs.git
+    pkgs.nixfmt
+    pkgs.vim
   ];
 }
