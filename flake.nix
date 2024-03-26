@@ -25,6 +25,13 @@
 
       security.pam.enableSudoTouchIdAuth = true;
 
+      homebrew = {
+        enable = true;
+        casks = [
+          "1password"
+        ];
+      };
+
       # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
 
       # Auto upgrade nix package and the daemon service.
