@@ -1,4 +1,4 @@
-{self}: {
+{ self, pkgs }: {
   security.pam.enableSudoTouchIdAuth = true;
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -21,5 +21,11 @@
       "/System/Applications/System Settings.app"
     ];
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
+  };
+
+  fonts = {
+    fontDir.enable = true;
+    fonts =
+      [ (pkgs.nerdfonts.override { fonts = [ "IntelOneMono" ]; }) ];
   };
 }
