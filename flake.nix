@@ -13,92 +13,68 @@
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-cask }:
-  let
-    configuration = { pkgs, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ 
+    let
+      configuration = { pkgs, ... }: {
+        imports = [
+          ./system.nix
+        ];
+        # List packages installed in system profile. To search by name, run:
+        # $ nix-env -qaP | grep wget
+        environment.systemPackages = [
           pkgs.git
           pkgs.vim
+          pkgs.nixfmt
           pkgs.gh
           pkgs.slack
           pkgs.discord
           pkgs.raycast
         ];
 
-      security.pam.enableSudoTouchIdAuth = true;
+        security.pam.enableSudoTouchIdAuth = true;
 
-      homebrew = {
-        enable = true;
-        casks = [
-          "1password"
-          "arc"
-        ];
+        homebrew = {
+          enable = true;
+          casks = [ "1password" "arc" ];
+        };
+
+        # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
+
+        # Auto upgrade nix package and the daemon service.
+        services.nix-daemon.enable = true;
+        # nix.package = pkgs.nix;
+
+        # Necessary for using flakes on this system.
+        nix.settings.experimental-features = "nix-command flakes";
+
+        # Create /etc/zshrc that loads the nix-darwin environment.
+        programs.zsh.enable = true; # default shell on catalina
+        # programs.fish.enable = true;
+
+        # The platform the configuration will be used on.
+        nixpkgs.hostPlatform = "aarch64-darwin";
+        nixpkgs.config.allowUnfree = true;
+
+
       };
-
-      # programs.git = {email = "me@lozanojoseph.com"; name = "Joseph Lozano"; enable = true; };
-
-      # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
-      # nix.package = pkgs.nix;
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Create /etc/zshrc that loads the nix-darwin environment.
-      programs.zsh.enable = true;  # default shell on catalina
-      # programs.fish.enable = true;
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 4;
-
-      system.defaults = {
-        dock.autohide = false;
-        dock.orientation = "left";
-        dock.show-recents = false;
-        dock.persistent-apps = [
-          "/System/Applications/Messages.app"
-          "/System/Applications/Utilities/Terminal.app"
-          "/Applications/Arc.app"
-          "/Applications/Nix Apps/Slack.app"
-          "/Applications/Nix Apps/Discord.app"
-          "/Applications/Arc.app"
-          "/System/Applications/System Settings.app"
-        ];
-        NSGlobalDomain."com.apple.swipescrolldirection" = false;
-      };
-
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
-      nixpkgs.config.allowUnfree = true;
-
-    };
-  in
-  {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."Josephs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      modules = [
-        nix-homebrew.darwinModules.nix-homebrew {
-          nix-homebrew = {
-            enable = true;
-            user = "joseph";
-            autoMigrate = true;
-            taps = {
-              "homebrew/homebrew-cask" = homebrew-cask;
+    in {
+      # Build darwin flake using:
+      # $ darwin-rebuild build --flake .#simple
+      darwinConfigurations."Josephs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        modules = [
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              user = "joseph";
+              autoMigrate = true;
+              taps = { "homebrew/homebrew-cask" = homebrew-cask; };
             };
-          };
-        }
-        configuration
-      ];
-    };
+          }
+          configuration
+        ];
+      };
 
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."Josephs-MacBook-Pro".pkgs;
-  };
+      # Expose the package set, including overlays, for convenience.
+      darwinPackages = self.darwinConfigurations."Josephs-MacBook-Pro".pkgs;
+    };
 }
