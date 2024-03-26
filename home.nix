@@ -25,6 +25,7 @@
       pkgs.jq
       pkgs.less
       pkgs.neofetch
+      pkgs.neovim
       pkgs.nixfmt
       pkgs.starship
       pkgs.tree
@@ -47,6 +48,11 @@
         plugins = [ "git" ];
         theme = "robbyrussell";
       };
+    };
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
     };
   };
 }
