@@ -32,6 +32,7 @@
       pkgs.vim
       pkgs.wget
       pkgs.youtube-dl
+      pkgs.zoxide
       pkgs.zsh
     ];
   };
@@ -48,6 +49,13 @@
         plugins = [ "git" ];
         theme = "robbyrussell";
       };
+    };
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      options = [
+        "--cmd cd"
+      ];
     };
     direnv = {
       enable = true;
