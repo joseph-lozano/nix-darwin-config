@@ -24,6 +24,7 @@ _: {
       "spotify"
       "visual-studio-code"
       "vlc"
+      "zoom"
     ];
   };
 }
