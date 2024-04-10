@@ -6,7 +6,7 @@
     # ../home/nvim 
   ];
   home = {
-    stateVersion = "24.05";
+    stateVersion = "23.11";
     sessionVariables = {
       PAGER = "less";
       CLICLOLOR = 1;
@@ -15,6 +15,7 @@
     };
 
     packages = [
+      pkgs.bun
       pkgs.curl
       pkgs.direnv
       pkgs.ffmpeg
@@ -27,6 +28,7 @@
       pkgs.neofetch
       pkgs.neovim
       pkgs.nixfmt
+      pkgs.pre-commit
       pkgs.starship
       pkgs.tree
       pkgs.vim
@@ -34,6 +36,9 @@
       pkgs.youtube-dl
       pkgs.zoxide
       pkgs.zsh
+
+      pkgs.nodejs_20
+      (pkgs.elixir_1_16.override { erlang = pkgs.erlang_26; })
     ];
   };
 
@@ -49,18 +54,15 @@
         plugins = [ "git" ];
         theme = "robbyrussell";
       };
+      shellAliases = { phx = "iex -S mix phx.server"; };
     };
     zoxide = {
       enable = true;
       enableZshIntegration = true;
-      options = [
-        "--cmd cd"
-      ];
+      options = [ "--cmd cd" ];
     };
     direnv = {
       enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
     };
   };
 }

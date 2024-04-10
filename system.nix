@@ -21,6 +21,8 @@
       "/System/Applications/System Settings.app"
     ];
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
+    NSGlobalDomain."InitialKeyRepeat" = 1;
+    NSGlobalDomain."KeyRepeat" = 10;
   };
 
   fonts = {
