@@ -22,7 +22,7 @@
     ];
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
     NSGlobalDomain."InitialKeyRepeat" = 1;
-    NSGlobalDomain."KeyRepeat" = 10;
+    NSGlobalDomain."KeyRepeat" = 1;
   };
 
   fonts = {
