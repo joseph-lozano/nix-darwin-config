@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   imports = [
     ./home/git.nix
-    ./home/starship.nix
     ./home/zsh.nix
     # ../home/nvim 
   ];
@@ -29,13 +28,13 @@
       pkgs.neovim
       pkgs.nixfmt
       pkgs.pre-commit
-      pkgs.starship
       pkgs.tree
       pkgs.vim
       pkgs.wget
       pkgs.youtube-dl
       pkgs.zoxide
       pkgs.zsh
+      pkgs.zsh-powerlevel10k
 
       pkgs.nodejs_20
       (pkgs.elixir_1_16.override { erlang = pkgs.erlang_26; })
@@ -52,9 +51,11 @@
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" ];
-        theme = "robbyrussell";
       };
-      shellAliases = { phx = "iex -S mix phx.server"; };
+      initExtra = ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      source ~/.p10k.zsh
+      '';
     };
     zoxide = {
       enable = true;
