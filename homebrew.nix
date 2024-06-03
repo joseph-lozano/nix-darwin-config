@@ -7,7 +7,7 @@ _: {
     global.brewfile = true;
     masApps = { };
     taps = [
-      "homebrew/cask-versions"
+      # "homebrew/cask-versions"
     ];
     # Ideally leave this empty and only use nix to manage this 
     brews = [ ];
@@ -15,7 +15,7 @@ _: {
       "1password"
       "arc"
       "discord"
-      "firefox-developer-edition"
+      "firefox"
       "iterm2"
       "livebook"
       "nvidia-geforce-now"
