@@ -8,7 +8,7 @@
   system.stateVersion = 4;
 
   system.defaults = {
-    dock.autohide = false;
+    dock.autohide = true;
     dock.orientation = "left";
     dock.show-recents = false;
     dock.persistent-apps = [
@@ -21,8 +21,6 @@
       "/System/Applications/System Settings.app"
     ];
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
-    NSGlobalDomain."InitialKeyRepeat" = 1;
-    NSGlobalDomain."KeyRepeat" = 1;
   };
 
   fonts = {
