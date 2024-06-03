@@ -37,6 +37,7 @@
       pkgs.zsh-powerlevel10k
 
       pkgs.nodejs_20
+      pkgs.nodejs_20.pkgs."gitmoji-cli"
     ];
   };
 
@@ -49,6 +50,7 @@
       enable = true;
       shellAliases = {
         phx = "iex -S mix phx.server";
+        pn = "pnpm";
       };
       oh-my-zsh = {
         enable = true;
