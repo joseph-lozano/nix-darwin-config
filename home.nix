@@ -26,7 +26,7 @@
       pkgs.less
       pkgs.neofetch
       pkgs.neovim
-      pkgs.nixfmt
+      pkgs.nix-direnv
       pkgs.pre-commit
       pkgs.tree
       pkgs.vim
@@ -37,7 +37,6 @@
       pkgs.zsh-powerlevel10k
 
       pkgs.nodejs_20
-      (pkgs.elixir_1_16.override { erlang = pkgs.erlang_26; })
     ];
   };
 
@@ -48,6 +47,9 @@
     };
     zsh = {
       enable = true;
+      shellAliases = {
+        phx = "iex -S mix phx.server";
+      };
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" ];
