@@ -14,6 +14,7 @@ _: {
     casks = [
       "1password"
       "arc"
+      "balenaetcher"
       "discord"
       "firefox"
       "iterm2"

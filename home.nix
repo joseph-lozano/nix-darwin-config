@@ -24,6 +24,7 @@
       pkgs.htop
       pkgs.jq
       pkgs.less
+      pkgs.mise
       pkgs.neofetch
       pkgs.neovim
       pkgs.nix-direnv
