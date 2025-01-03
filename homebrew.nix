@@ -13,9 +13,8 @@ _: {
     brews = [ ];
     casks = [
       "1password"
-      "arc"
       "balenaetcher"
-      "choosy"
+      "choosy" 
       "cursor"
       "discord"
       "firefox"

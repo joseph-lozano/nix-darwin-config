@@ -4,18 +4,37 @@
     ./home/zsh.nix
     # ../home/nvim 
   ];
+
   home = {
-    stateVersion = "23.11";
+    stateVersion = "24.05";
+
     sessionVariables = {
       PAGER = "less";
       CLICLOLOR = 1;
       EDITOR = "nvim";
       VISUAL = "nvim";
+      SSH_AUTH_SOCK = "$HOME/Library/Group\\ Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+    };
+
+    file = {
+      ".p10k.zsh".source = ./home/p10k.zsh;
+
+      "/Library/Application Support/com.mitchellh.ghostty/config".text = ''
+        font-family="IntoneMono Nerd Font Mono"
+        theme=catppuccin-mocha
+        font-size=22
+      '';
+
+      ".config/nvim" = {
+        source = ./home/nvim;
+        recursive = true;
+      };
     };
 
     packages = [
       pkgs.bun
       pkgs.curl
+      pkgs.devenv
       pkgs.direnv
       pkgs.ffmpeg
       pkgs.gh
@@ -37,8 +56,8 @@
       pkgs.zsh
       pkgs.zsh-powerlevel10k
 
-      pkgs.nodejs_20
-      pkgs.nodejs_20.pkgs."gitmoji-cli"
+      pkgs.nodejs_22
+      pkgs.nodejs_22.pkgs."gitmoji-cli"
     ];
   };
 
@@ -47,6 +66,15 @@
       enable = true;
       ignores = [ ".DS_Store" ];
     };
+
+    ssh = {
+      enable = true;
+      extraConfig = ''
+      Host *
+        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      '';
+    };
+
     zsh = {
       enable = true;
       shellAliases = {
@@ -58,17 +86,19 @@
         plugins = [ "git" ];
       };
       initExtra = ''
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      source ~/.p10k.zsh
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+        source ~/.p10k.zsh
+        export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
       '';
     };
+
     zoxide = {
       enable = true;
       enableZshIntegration = true;
       options = [ "--cmd cd" ];
     };
-    direnv = {
-      enable = true;
-    };
+
+    direnv.enable = true;
   };
 }

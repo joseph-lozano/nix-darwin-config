@@ -13,14 +13,21 @@
     dock.show-recents = false;
     dock.persistent-apps = [
       "/System/Applications/Messages.app"
-      "/Applications/iTerm.app"
-      "/Applications/Visual Studio Code.app"
-      "/Applications/Arc.app"
+      "/Applications/Ghostty.app"
+      "/Applications/Cursor.app"
+      "/Applications/Safari.app"
       "/Applications/Slack.app"
       "/Applications/Discord.app"
       "/System/Applications/System Settings.app"
     ];
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
+    NSGlobalDomain.InitialKeyRepeat = 15;
+    NSGlobalDomain.KeyRepeat = 2;
+  };
+
+  system.keyboard = {
+    enableKeyMapping = true;
+    swapLeftCommandAndLeftAlt = true;
   };
 
   fonts = {
