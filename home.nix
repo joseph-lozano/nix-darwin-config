@@ -51,7 +51,7 @@
       pkgs.tree
       pkgs.vim
       pkgs.wget
-      pkgs.youtube-dl
+      pkgs.yt-dlp
       pkgs.zoxide
       pkgs.zsh
       pkgs.zsh-powerlevel10k

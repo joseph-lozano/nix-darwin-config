@@ -30,9 +30,7 @@
     swapLeftCommandAndLeftAlt = true;
   };
 
-  fonts = {
-    fontDir.enable = true;
-    fonts =
-      [ (pkgs.nerdfonts.override { fonts = [ "IntelOneMono" ]; }) ];
-  };
+  fonts.packages = [
+    pkgs.nerd-fonts.intone-mono
+  ];
 }
