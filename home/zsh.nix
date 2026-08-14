@@ -26,7 +26,7 @@ _: {
       # Share command history between zsh sessions
       share = true;
     };
-    initExtra = ''
+    initContent = ''
       eval "$(direnv hook zsh)"
       function cheat() {
         command curl "cheat.sh/$1"

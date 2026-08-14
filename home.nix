@@ -37,6 +37,7 @@
       pkgs.devenv
       pkgs.direnv
       pkgs.ffmpeg
+      pkgs.fastfetch
       pkgs.gh
       pkgs.git
       pkgs.glow
@@ -44,7 +45,6 @@
       pkgs.jq
       pkgs.less
       pkgs.mise
-      pkgs.neofetch
       pkgs.neovim
       pkgs.nix-direnv
       pkgs.pre-commit
@@ -57,7 +57,7 @@
       pkgs.zsh-powerlevel10k
 
       pkgs.nodejs_22
-      pkgs.nodejs_22.pkgs."gitmoji-cli"
+      pkgs."gitmoji-cli"
     ];
   };
 
@@ -69,10 +69,9 @@
 
     ssh = {
       enable = true;
-      extraConfig = ''
-      Host *
-        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-      '';
+      enableDefaultConfig = false;
+      settings."*".IdentityAgent =
+        "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
     zsh = {
@@ -85,7 +84,7 @@
         enable = true;
         plugins = [ "git" ];
       };
-      initExtra = ''
+      initContent = ''
         eval "$(/opt/homebrew/bin/brew shellenv)"
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         source ~/.p10k.zsh

@@ -1,9 +1,9 @@
 {
-  description = "Example Darwin system flake";
+  description = "Joseph's nix-darwin configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-cask = {
@@ -21,18 +21,16 @@
         imports =
           [ (import ./system.nix { inherit self pkgs; }) ./homebrew.nix ];
 
-        # Auto upgrade nix package and the daemon service.
-        services.nix-daemon.enable = true;
-        # nix.package = pkgs.nix;
-
-        # Necessary for using flakes on this system.
-        nix.settings.experimental-features = "nix-command flakes";
+        # Determinate Nix manages the Nix installation and daemon.
+        nix.enable = false;
 
         # The platform the configuration will be used on.
         nixpkgs.hostPlatform = "aarch64-darwin";
         nixpkgs.config.allowUnfree = true;
 
         programs.zsh.enable = true;
+
+        system.primaryUser = "joseph";
 
         users.users.joseph = {
           home = "/Users/joseph";
