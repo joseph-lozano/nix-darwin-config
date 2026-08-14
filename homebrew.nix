@@ -14,6 +14,7 @@ _: {
     casks = [
       "1password"
       "balenaetcher"
+      "chatgpt"
       "choosy" 
       "cursor"
       "discord"

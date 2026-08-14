@@ -27,6 +27,7 @@
 
     packages = [
       pkgs.bun
+      pkgs.codex
       pkgs.curl
       pkgs.devenv
       pkgs.ffmpeg
@@ -34,10 +35,12 @@
       pkgs.gh
       pkgs.git
       pkgs.glow
+      pkgs.herdr
       pkgs.htop
       pkgs.jq
       pkgs.less
       pkgs.mise
+      pkgs.pi-coding-agent
       pkgs.pre-commit
       pkgs.tree
       pkgs.wget
