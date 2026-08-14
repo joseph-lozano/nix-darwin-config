@@ -26,6 +26,17 @@ sudo nix run nix-darwin/master -- switch --flake '.#Josephs-MacBook-Pro'
 
 Log out and back in after the first activation.
 
+## Development Tools
+
+The configured workflow is centered on agentic coding:
+
+- Cursor desktop and CLI, configured for `EDITOR`, `VISUAL`, and Git
+- ChatGPT desktop app
+- OpenAI Codex and Pi coding-agent CLIs
+- Herdr terminal multiplexer for persistent agent sessions
+
+Vim, Neovim, and Claude tooling are intentionally not installed.
+
 ## Make and Apply Changes
 
 Evaluate and build changes without activating them:
