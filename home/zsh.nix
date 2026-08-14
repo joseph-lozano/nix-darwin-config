@@ -27,7 +27,6 @@ _: {
       share = true;
     };
     initContent = ''
-      eval "$(direnv hook zsh)"
       function cheat() {
         command curl "cheat.sh/$1"
       }

@@ -10,7 +10,7 @@
 
     sessionVariables = {
       PAGER = "less";
-      CLICLOLOR = 1;
+      CLICOLOR = 1;
       EDITOR = "nvim";
       VISUAL = "nvim";
       SSH_AUTH_SOCK = "$HOME/Library/Group\\ Containers/2BUA8C4S2C.com.1password/t/agent.sock";
@@ -19,7 +19,7 @@
     file = {
       ".p10k.zsh".source = ./home/p10k.zsh;
 
-      "/Library/Application Support/com.mitchellh.ghostty/config".text = ''
+      ".config/ghostty/config".text = ''
         font-family="IntoneMono Nerd Font Mono"
         theme=catppuccin-mocha
         font-size=22
@@ -35,7 +35,6 @@
       pkgs.bun
       pkgs.curl
       pkgs.devenv
-      pkgs.direnv
       pkgs.ffmpeg
       pkgs.fastfetch
       pkgs.gh
@@ -46,7 +45,6 @@
       pkgs.less
       pkgs.mise
       pkgs.neovim
-      pkgs.nix-direnv
       pkgs.pre-commit
       pkgs.tree
       pkgs.vim
@@ -98,6 +96,9 @@
       options = [ "--cmd cd" ];
     };
 
-    direnv.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   };
 }
