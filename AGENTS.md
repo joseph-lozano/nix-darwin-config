@@ -62,13 +62,13 @@ This repository currently declares no formatter or automated tests. Match the ex
 
 ## Upgrade Notes
 
-The current lock file pins inputs from late 2024/early 2025. Before updating it, review current nix-darwin, Home Manager, and nix-homebrew release notes together. At the time this guidance was written, the existing configuration has these known review points; propose them rather than fixing them opportunistically:
+The inputs follow unstable/master branches and were last refreshed in August 2026. Before updating them again, review current nix-darwin, Home Manager, and nix-homebrew release notes together. Preserve these deliberate integration choices:
 
-- Current nix-darwin removed `services.nix-daemon.enable`; Nix daemon ownership also needs an explicit decision when using Determinate Nix.
-- `security.pam.enableSudoTouchIdAuth` moved to `security.pam.services.sudo_local.touchIdAuth`.
-- Home Manager deprecated `programs.zsh.initExtra` in favor of `programs.zsh.initContent`.
-- The Ghostty `home.file` target starts with `/Library`; verify whether the intent is Joseph's `~/Library` or `~/.config/ghostty` before changing it.
+- Determinate Nix owns the Nix installation and daemon, so nix-darwin has `nix.enable = false`. Do not add nix-darwin-managed `nix.*` settings unless the ownership model is intentionally changed.
+- `system.primaryUser = "joseph"` ensures Homebrew and user-scoped macOS defaults activate for the intended account.
+- `system.stateVersion = 4` and `home.stateVersion = "24.05"` remain at their original compatibility versions.
+
+The following preference decisions remain open; propose them rather than changing them opportunistically:
+
 - nix-homebrew's declarative taps and nix-darwin's `homebrew.taps` should be kept aligned if tap management is modernized.
 - `home/nvim/.gitignore` excludes `lazy-lock.json`, so Neovim plugins are not reproducibly pinned. Changing that is a preference decision.
-
-Remove an upgrade note once its underlying configuration has been deliberately resolved.
