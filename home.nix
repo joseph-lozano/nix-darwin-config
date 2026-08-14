@@ -2,7 +2,6 @@
   imports = [
     ./home/git.nix
     ./home/zsh.nix
-    # ../home/nvim 
   ];
 
   home = {
@@ -11,8 +10,8 @@
     sessionVariables = {
       PAGER = "less";
       CLICOLOR = 1;
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      EDITOR = "cursor --wait";
+      VISUAL = "cursor --wait";
       SSH_AUTH_SOCK = "$HOME/Library/Group\\ Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
@@ -24,11 +23,6 @@
         theme=catppuccin-mocha
         font-size=22
       '';
-
-      ".config/nvim" = {
-        source = ./home/nvim;
-        recursive = true;
-      };
     };
 
     packages = [
@@ -44,10 +38,8 @@
       pkgs.jq
       pkgs.less
       pkgs.mise
-      pkgs.neovim
       pkgs.pre-commit
       pkgs.tree
-      pkgs.vim
       pkgs.wget
       pkgs.yt-dlp
       pkgs.zoxide

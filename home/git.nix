@@ -26,7 +26,7 @@ _: {
           autoSetupRemote = true;
         };
         core = {
-          editor = "nvim";
+          editor = "cursor --wait";
           fileMode = false;
           ignorecase = false;
         };
