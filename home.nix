@@ -18,8 +18,7 @@
     file = {
       ".p10k.zsh".source = ./home/p10k.zsh;
 
-      ".codex/skills/herdr".source =
-        "${pkgs.herdr}/share/herdr/skills/herdr";
+      ".codex/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
 
       ".config/ghostty/config".text = ''
         font-family="IntoneMono Nerd Font Mono"
@@ -27,11 +26,11 @@
         font-size=22
       '';
 
-      ".pi/agent/skills/herdr".source =
-        "${pkgs.herdr}/share/herdr/skills/herdr";
+      ".pi/agent/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
     };
 
     packages = [
+      pkgs.amp-cli
       pkgs.bun
       pkgs.codex
       pkgs.curl
@@ -69,8 +68,7 @@
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      settings."*".IdentityAgent =
-        "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+      settings."*".IdentityAgent = "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
     zsh = {

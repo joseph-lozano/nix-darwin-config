@@ -68,6 +68,7 @@
           home-manager.darwinModules.home-manager
           {
             home-manager = {
+              useGlobalPkgs = true;
               users.joseph.imports = [ ./home.nix ];
             };
           }
