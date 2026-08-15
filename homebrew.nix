@@ -8,13 +8,13 @@ _: {
     taps = [
       # "homebrew/cask-versions"
     ];
-    # Ideally leave this empty and only use nix to manage this 
+    # Ideally leave this empty and only use nix to manage this
     brews = [ ];
     casks = [
       "1password"
       "balenaetcher"
       "chatgpt"
-      "choosy" 
+      "choosy"
       "cursor"
       "discord"
       "firefox"
@@ -32,6 +32,7 @@ _: {
       "slack"
       "spotify"
       "steam"
+      "tailscale-app"
       "vlc"
       "zoom"
     ];

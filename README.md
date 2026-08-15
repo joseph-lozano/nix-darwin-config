@@ -37,6 +37,7 @@ Some app setup is intentionally interactive because it depends on account authen
    - `Command-Shift-5` — open CleanShot's all-in-one capture menu
 3. Open **Raycast → Settings → General** and set the Raycast hotkey to `Command-Space`. The system configuration disables the conflicting Spotlight shortcut.
 4. Open In Your Face and connect the Google account under its calendar settings. Google OAuth sign-in and consent must be completed interactively; credentials and authorization tokens are not stored in this repository.
+5. Open Tailscale, approve its VPN configuration, sign in to the intended tailnet, and verify the connection with `tailscale status`.
 
 Setapp does not automatically sync every managed app's preferences. Use an app's own sync or settings export when it provides one.
 
