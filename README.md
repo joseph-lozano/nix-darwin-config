@@ -49,7 +49,10 @@ After logging back in, install the globally declared Node LTS and Aube versions:
 mise install
 node --version
 aube --version
+exec zsh
 ```
+
+New Zsh sessions activate Aube's shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`. Aube preserves the project's existing supported lockfile format.
 
 Then complete the steps that require an account, recovery key, backup destination, or macOS consent:
 
@@ -72,7 +75,7 @@ The configured workflow is centered on agentic coding:
 - ChatGPT desktop app
 - OpenAI Codex and Pi coding-agent CLIs
 - Herdr terminal multiplexer for persistent agent sessions
-- mise with Node LTS as the only global runtime and Aube as its package manager
+- mise with Node LTS as the only global runtime and Aube with its shell shims as the package manager
 
 Neovim, other additional editors, and Claude tooling are intentionally not installed.
 

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   imports = [
     ./home/git.nix
     ./home/zsh.nix
@@ -88,11 +88,18 @@
         enable = true;
         plugins = [ "git" ];
       };
-      initContent = ''
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-        source ~/.p10k.zsh
-      '';
+      initContent = lib.mkMerge [
+        ''
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+          source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+          source ~/.p10k.zsh
+        ''
+        (lib.mkAfter ''
+          if command -v aube >/dev/null 2>&1; then
+            eval "$(aube activate zsh)"
+          fi
+        '')
+      ];
     };
 
     zoxide = {

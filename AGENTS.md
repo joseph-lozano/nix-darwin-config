@@ -70,7 +70,7 @@ The inputs follow unstable/master branches and were last refreshed in August 202
 - `system.primaryUser = "joseph"` ensures Homebrew and user-scoped macOS defaults activate for the intended account.
 - `system.stateVersion = 4` and `home.stateVersion = "24.05"` remain at their original compatibility versions.
 - Setapp itself is installed through Homebrew, while subscription apps such as CleanShot X, TablePlus, and In Your Face are installed from the owner's Setapp Favorites. Do not add standalone Homebrew or App Store copies of those apps unless explicitly requested; they would bypass Setapp licensing and updates.
-- Home Manager configures mise with Node LTS and Aube globally. Other runtimes belong in each project's `mise.toml`; do not add another global runtime unless explicitly requested.
+- Home Manager activates mise in Zsh and configures Node LTS and Aube globally. Aube's Zsh activation intentionally routes Node and npm-family package-manager commands through its shims. Other runtimes belong in each project's `mise.toml`; do not add another global runtime unless explicitly requested.
 - Rosetta 2 installation, the macOS application firewall with stealth mode, and automatic system and security updates are deliberate fresh-Mac defaults.
 
 The following preference decisions remain open; propose them rather than changing them opportunistically:
