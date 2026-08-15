@@ -18,11 +18,17 @@
     file = {
       ".p10k.zsh".source = ./home/p10k.zsh;
 
+      ".codex/skills/herdr".source =
+        "${pkgs.herdr}/share/herdr/skills/herdr";
+
       ".config/ghostty/config".text = ''
         font-family="IntoneMono Nerd Font Mono"
         theme=catppuccin-mocha
         font-size=22
       '';
+
+      ".pi/agent/skills/herdr".source =
+        "${pkgs.herdr}/share/herdr/skills/herdr";
     };
 
     packages = [
