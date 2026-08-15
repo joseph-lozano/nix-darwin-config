@@ -22,7 +22,6 @@ _: {
       "ghostty"
       "google-chrome@canary"
       "handy"
-      "livebook"
       "nvidia-geforce-now"
       "obsidian"
       "orbstack"
