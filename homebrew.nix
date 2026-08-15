@@ -20,7 +20,7 @@ _: {
       "discord"
       "firefox"
       "ghostty"
-      "google-chrome@canary"
+      "google-chrome"
       "handy"
       "nvidia-geforce-now"
       "obsidian"
