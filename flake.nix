@@ -2,7 +2,6 @@
   description = "Joseph's nix-darwin configuration";
 
   inputs = {
-    self.submodules = true;
     agent-skills = {
       url = "github:joseph-lozano/skills";
       flake = false;
@@ -18,7 +17,7 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     pi-config = {
-      url = "path:vendor/pi";
+      url = "github:joseph-lozano/pi";
       flake = false;
     };
     plannotator-source = {

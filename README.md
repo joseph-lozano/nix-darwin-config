@@ -58,17 +58,13 @@ Do not install Homebrew separately. The first nix-darwin activation installs and
 
 ### 4. Download and check the configuration
 
-Authenticate GitHub over HTTPS before cloning because the configuration includes the private `joseph-lozano/pi` submodule:
-
 ```sh
-nix shell nixpkgs#gh -c gh auth login --hostname github.com --git-protocol https --web
-nix shell nixpkgs#gh -c gh auth setup-git
-git clone --recurse-submodules https://github.com/joseph-lozano/nix-darwin-config.git
+git clone https://github.com/joseph-lozano/nix-darwin-config.git
 cd nix-darwin-config
 git status --short --branch
 ```
 
-The status should show a clean `main` branch tracking `origin/main`. If the repository was cloned without `--recurse-submodules`, run `git submodule update --init --recursive` before continuing. Evaluate and build the complete system without activating it:
+The status should show a clean `main` branch tracking `origin/main`. Evaluate and build the complete system without activating it:
 
 ```sh
 nix flake check --no-update-lock-file --show-trace
@@ -100,7 +96,7 @@ Complete the steps that require an account, recovery key, backup destination, or
 - [ ] Verify FileVault under **System Settings → Privacy & Security → FileVault**, enable it if needed, and store the recovery key somewhere other than this repository.
 - [ ] Configure Time Machine and complete its first backup.
 - [ ] Sign in to 1Password. Under **Settings → Developer**, enable its SSH agent and **Integrate with 1Password CLI**; enable Touch ID under **Settings → Security**, then verify CLI access with `op vault list`.
-- [ ] Confirm that 1Password contains the SSH key used for GitHub and Git signing, verify the bootstrap login with `gh auth status`, and verify SSH access with `ssh -T git@github.com`.
+- [ ] Confirm that 1Password contains the SSH key used for GitHub and Git signing, then run `gh auth login` and verify SSH access with `ssh -T git@github.com`.
 - [ ] Run `amp` and complete its browser sign-in; connect it to Cursor from Amp's command palette if desired.
 
 ## Finish App Setup
@@ -206,7 +202,6 @@ Because Homebrew cleanup is enabled, a formula or cask installed manually but no
 Ask an agent to handle updates deliberately:
 
 - Update `flake.lock` in a separate commit after reviewing current nix-darwin, Home Manager, nix-homebrew, and Nixpkgs changes.
-- Update the private Pi configuration with `git submodule update --remote vendor/pi`, review the submodule diff, and commit the new gitlink separately.
 - Verify every Homebrew cask still exists under its declared name; Homebrew occasionally renames casks.
 - Let GUI applications with built-in updaters manage their routine releases. System activation intentionally does not force every Homebrew app to upgrade.
 - Update the global Node LTS and Aube installations with `mise upgrade` when desired.
