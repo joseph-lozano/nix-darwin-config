@@ -127,14 +127,18 @@
     "pi-config": {
       "flake": false,
       "locked": {
-        "path": "vendor/pi",
-        "type": "path"
+        "lastModified": 1786764130,
+        "narHash": "sha256-yYeoBBAwvd35IP7OCk2kGW8VG/dob5iJNr7xjUnHEs4=",
+        "owner": "joseph-lozano",
+        "repo": "pi",
+        "rev": "e3a5e8ec84bfd205939bb053850a4df913123d7f",
+        "type": "github"
       },
       "original": {
-        "path": "vendor/pi",
-        "type": "path"
-      },
-      "parent": []
+        "owner": "joseph-lozano",
+        "repo": "pi",
+        "type": "github"
+      }
     },
     "plannotator-source": {
       "flake": false,
