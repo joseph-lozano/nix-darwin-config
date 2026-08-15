@@ -133,6 +133,21 @@ exec zsh
 
 New Zsh sessions activate Aube's shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`. Aube preserves the project's existing supported lockfile format.
 
+Docker Sandboxes is independent of OrbStack's Docker engine. Authenticate its standalone `sbx` CLI and OpenAI access on the host:
+
+```sh
+sbx login
+sbx secret set openai --oauth
+```
+
+Then run Codex for a project from that project's directory:
+
+```sh
+sbx run codex
+```
+
+`sbx` runs Codex in its own isolated microVM and stores the OpenAI credentials in the macOS keychain. OrbStack remains the Docker and Compose runtime outside these agent sandboxes.
+
 ## Expected System Behavior
 
 The configuration also:
@@ -152,6 +167,7 @@ The configured workflow is centered on agentic coding:
 - Bare terminal Vim for `EDITOR`, `VISUAL`, Git commits, and other interactive prompts
 - ChatGPT desktop app
 - OpenAI Codex and Pi coding-agent CLIs
+- Docker Sandboxes for running Codex in isolated microVMs and OrbStack for regular Docker and Compose workloads
 - Herdr terminal multiplexer for persistent agent sessions
 - mise with Node LTS as the only global runtime and Aube with its shell shims as the package manager
 

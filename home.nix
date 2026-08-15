@@ -34,6 +34,7 @@
       pkgs.codex
       pkgs.curl
       pkgs.devenv
+      pkgs.docker-sbx
       pkgs.ffmpeg
       pkgs.fastfetch
       pkgs.gh
