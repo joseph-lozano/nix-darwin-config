@@ -19,7 +19,7 @@ _: {
       ignoreSpace = true;
       # History file location	string
       # programs.zsh.history.path = "${pkgs.home-manager.home}/.zsh_history";
-      # Number of history lines to save	
+      # Number of history lines to save
       save = 50000;
       # Number of history lines to keep
       size = 10000;
