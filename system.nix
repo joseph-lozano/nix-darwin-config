@@ -29,6 +29,11 @@
   };
 
   system.activationScripts.postActivation.text = ''
+    if ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
+      echo >&2 "installing Rosetta 2..."
+      /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+    fi
+
     # Preserve unrelated macOS shortcuts while freeing shortcuts for preferred apps.
     disable_symbolic_hotkey() {
       /bin/launchctl asuser "$(/usr/bin/id -u joseph)" \
