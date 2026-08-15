@@ -124,6 +124,18 @@
         "type": "github"
       }
     },
+    "pi-config": {
+      "flake": false,
+      "locked": {
+        "path": "vendor/pi",
+        "type": "path"
+      },
+      "original": {
+        "path": "vendor/pi",
+        "type": "path"
+      },
+      "parent": []
+    },
     "root": {
       "inputs": {
         "agent-skills": "agent-skills",
@@ -131,7 +143,8 @@
         "homebrew-cask": "homebrew-cask",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "pi-config": "pi-config"
       }
     }
   },
