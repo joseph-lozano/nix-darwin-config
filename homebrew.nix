@@ -22,6 +22,7 @@ _: {
       "ghostty"
       "google-chrome"
       "handy"
+      "iina"
       "nvidia-geforce-now"
       "obsidian"
       "orbstack"
@@ -34,7 +35,6 @@ _: {
       "spotify"
       "steam"
       "tailscale-app"
-      "vlc"
       "zoom"
     ];
   };
