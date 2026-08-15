@@ -12,6 +12,7 @@ _: {
     brews = [ ];
     casks = [
       "1password"
+      "1password-cli"
       "balenaetcher"
       "chatgpt"
       "choosy"

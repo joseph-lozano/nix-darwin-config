@@ -60,7 +60,7 @@ Then complete the steps that require an account, recovery key, backup destinatio
 - [ ] Sign in to the Apple Account and enable the desired iCloud services.
 - [ ] Enable FileVault in **System Settings → Privacy & Security → FileVault**, then store the recovery key somewhere other than this repository.
 - [ ] Configure and run the first Time Machine backup.
-- [ ] Sign in to 1Password and enable its SSH agent under **Settings → Developer**.
+- [ ] Sign in to 1Password. Under **Settings → Developer**, enable its SSH agent and **Integrate with 1Password CLI**; enable Touch ID under **Settings → Security**, then verify CLI access with `op vault list`.
 - [ ] Authenticate GitHub with `gh auth login` and verify SSH access with `ssh -T git@github.com`.
 - [ ] Run `amp` and complete its browser sign-in; connect it to Cursor from Amp's command palette if desired.
 - [ ] Open Handy, grant Microphone and Accessibility access, download a local transcription model, and choose a shortcut that does not conflict with CleanShot X or Raycast.
