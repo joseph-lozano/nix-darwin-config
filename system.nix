@@ -3,6 +3,12 @@
     reattach = true;
     touchIdAuth = true;
   };
+
+  networking.applicationFirewall = {
+    enable = true;
+    enableStealthMode = true;
+  };
+
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
@@ -11,6 +17,13 @@
   system.stateVersion = 4;
 
   system.defaults = {
+    CustomSystemPreferences."/Library/Preferences/com.apple.SoftwareUpdate" = {
+      AutomaticCheckEnabled = true;
+      AutomaticDownload = true;
+      ConfigDataInstall = true;
+      CriticalUpdateInstall = true;
+    };
+    SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
     dock.autohide = true;
     dock.orientation = "left";
     dock.show-recents = false;
