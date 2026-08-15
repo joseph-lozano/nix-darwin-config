@@ -72,8 +72,4 @@
     enableKeyMapping = true;
     swapLeftCommandAndLeftAlt = true;
   };
-
-  fonts.packages = [
-    pkgs.nerd-fonts.intone-mono
-  ];
 }

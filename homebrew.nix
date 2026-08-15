@@ -19,6 +19,7 @@ _: {
       "cursor"
       "discord"
       "firefox"
+      "font-intone-mono-nerd-font"
       "ghostty"
       "google-chrome"
       "handy"
