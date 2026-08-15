@@ -31,7 +31,6 @@
 
     packages = [
       pkgs.amp-cli
-      pkgs.bun
       pkgs.codex
       pkgs.curl
       pkgs.devenv
@@ -44,7 +43,6 @@
       pkgs.htop
       pkgs.jq
       pkgs.less
-      pkgs.mise
       pkgs.pi-coding-agent
       pkgs.pre-commit
       pkgs.tree
@@ -55,12 +53,21 @@
       pkgs.zsh
       pkgs.zsh-powerlevel10k
 
-      pkgs.nodejs_22
       pkgs."gitmoji-cli"
     ];
   };
 
   programs = {
+    mise = {
+      enable = true;
+      enableMutableConfig = true;
+      enableZshIntegration = true;
+      globalConfig.tools = {
+        node = "lts";
+        pnpm = "latest";
+      };
+    };
+
     git = {
       enable = true;
       ignores = [ ".DS_Store" ];
