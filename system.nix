@@ -29,7 +29,7 @@
   };
 
   system.activationScripts.postActivation.text = ''
-    # Preserve unrelated macOS shortcuts while freeing screenshot shortcuts for CleanShot X.
+    # Preserve unrelated macOS shortcuts while freeing shortcuts for preferred apps.
     disable_symbolic_hotkey() {
       /bin/launchctl asuser "$(/usr/bin/id -u joseph)" \
         /usr/bin/sudo --user=joseph -- \
@@ -43,6 +43,7 @@
     disable_symbolic_hotkey 30  # Shift-Command-4: capture an area
     disable_symbolic_hotkey 31  # Control-Shift-Command-4: copy an area
     disable_symbolic_hotkey 184 # Shift-Command-5: screenshot and recording options
+    disable_symbolic_hotkey 64  # Command-Space: Spotlight search
 
     /bin/launchctl asuser "$(/usr/bin/id -u joseph)" \
       /usr/bin/sudo --user=joseph -- \
