@@ -1,9 +1,8 @@
 _: {
   homebrew = {
     enable = true;
-    caskArgs.no_quarantine = true;
     # Automatically remove packages not contained in list
-    onActivation.cleanup = "zap";
+    onActivation.cleanup = "uninstall";
     global.brewfile = true;
     masApps = { };
     taps = [
