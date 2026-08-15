@@ -52,8 +52,6 @@
       pkgs.zoxide
       pkgs.zsh
       pkgs.zsh-powerlevel10k
-
-      pkgs."gitmoji-cli"
     ];
   };
 
