@@ -133,6 +133,16 @@ exec zsh
 
 New Zsh sessions activate Aube's shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`. Aube preserves the project's existing supported lockfile format.
 
+Install the dependencies used by the declarative Pi extensions:
+
+```sh
+npm ci --prefix ~/.pi/agent
+```
+
+Pi automatically installs the `pi-cursor-sdk` package declared by the pinned configuration. Start `pi` and use `/login` for the configured xAI and Cursor providers. The Exa and Firecrawl extensions are optional and require `EXA_API_KEY` and `FIRECRAWL_API_KEY`, respectively; do not store those keys in this repository.
+
+Pi updates `settings.json` during normal use. Home Manager refreshes that writable file from `joseph-lozano/pi` on each activation, so persistent settings changes should be committed to that repository before rebuilding this configuration.
+
 Docker Sandboxes is independent of OrbStack's Docker engine. Authenticate its standalone `sbx` CLI and OpenAI access on the host:
 
 ```sh

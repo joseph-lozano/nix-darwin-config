@@ -1,6 +1,7 @@
 {
   agent-skills,
   lib,
+  pi-config,
   pkgs,
   ...
 }:
@@ -17,6 +18,20 @@ let
   agentSkillFiles =
     skillFilesFrom "${agent-skills}/skills/engineering"
     // skillFilesFrom "${agent-skills}/skills/productivity";
+
+  piExtensionFiles =
+    lib.mapAttrs'
+      (
+        name: _:
+        lib.nameValuePair ".pi/agent/extensions/${name}" {
+          source = "${pi-config}/extensions/${name}";
+        }
+      )
+      (
+        lib.filterAttrs (name: type: type == "regular" && name != "herdr-agent-state.ts") (
+          builtins.readDir "${pi-config}/extensions"
+        )
+      );
 in
 {
   imports = [
@@ -35,19 +50,34 @@ in
       SSH_AUTH_SOCK = "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
-    file = agentSkillFiles // {
-      ".p10k.zsh".source = ./home/p10k.zsh;
+    file =
+      agentSkillFiles
+      // piExtensionFiles
+      // {
+        ".p10k.zsh".source = ./home/p10k.zsh;
 
-      ".codex/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
+        ".codex/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
 
-      ".config/ghostty/config".text = ''
-        font-family="IntoneMono Nerd Font Mono"
-        theme=catppuccin-mocha
-        font-size=22
-      '';
+        ".config/ghostty/config".text = ''
+          font-family="IntoneMono Nerd Font Mono"
+          theme=catppuccin-mocha
+          font-size=22
+        '';
 
-      ".pi/agent/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
-    };
+        ".pi/agent/AGENTS.md".source = "${pi-config}/AGENTS.md";
+        ".pi/agent/cloak.json".source = "${pi-config}/cloak.json";
+        ".pi/agent/package-lock.json".source = "${pi-config}/package-lock.json";
+        ".pi/agent/package.json".source = "${pi-config}/package.json";
+        ".pi/agent/prompts" = {
+          source = "${pi-config}/prompts";
+          recursive = true;
+        };
+        ".pi/agent/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
+        ".pi/agent/themes" = {
+          source = "${pi-config}/themes";
+          recursive = true;
+        };
+      };
 
     packages = [
       pkgs.amp-cli
@@ -74,6 +104,13 @@ in
       pkgs.zsh-powerlevel10k
     ];
   };
+
+  home.activation.installPiConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    pi_dir="$HOME/.pi/agent"
+    $DRY_RUN_CMD mkdir -p "$pi_dir/extensions"
+    $DRY_RUN_CMD install -m 0644 ${pi-config}/settings.json "$pi_dir/settings.json"
+    $DRY_RUN_CMD ${pkgs.herdr}/bin/herdr integration install pi
+  '';
 
   programs = {
     mise = {

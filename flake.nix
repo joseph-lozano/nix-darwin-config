@@ -16,6 +16,10 @@
     };
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    pi-config = {
+      url = "github:joseph-lozano/pi";
+      flake = false;
+    };
   };
 
   outputs =
@@ -27,6 +31,7 @@
       nix-homebrew,
       homebrew-cask,
       home-manager,
+      pi-config,
     }:
     let
       configuration = { pkgs, ... }: {
@@ -73,7 +78,9 @@
           home-manager.darwinModules.home-manager
           {
             home-manager = {
-              extraSpecialArgs = { inherit agent-skills; };
+              extraSpecialArgs = {
+                inherit agent-skills pi-config;
+              };
               useGlobalPkgs = true;
               users.joseph.imports = [ ./home.nix ];
             };
