@@ -12,7 +12,19 @@ The `Josephs-MacBook-Pro` value is only the flake configuration's existing name.
 > [!WARNING]
 > Activation manages Homebrew declaratively and uses `cleanup = "uninstall"`. Every Homebrew formula or cask not listed in this repository is removed during activation. That is harmless on a fresh Mac, but add future Homebrew software to the configuration before activating it.
 
-## Bootstrap the Fresh Mac
+## Install or Update
+
+After completing macOS Setup Assistant, open Terminal and run the same command for the initial installation and future configuration updates:
+
+```sh
+curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/joseph-lozano/nix-darwin-config/main/install.sh | sh
+```
+
+On a new Mac, the script installs missing prerequisites, clones this repository, validates the complete system, asks before activation, and installs the declared Node LTS, Aube, and Pi dependencies. On subsequent runs, it requires a clean `main` checkout, fast-forwards it to `origin/main`, and reapplies the configuration. It uses the repository's committed `flake.lock`; it never changes dependency pins implicitly. Restart a newly installed Mac after it succeeds, then complete the account and app checklists below.
+
+Review [`install.sh`](install.sh) before running it if desired. The manual equivalent is retained below for troubleshooting.
+
+## Manual Bootstrap
 
 ### 1. Verify the Mac and account
 
@@ -123,10 +135,9 @@ Setapp does not automatically sync every managed app's preferences. Use an app's
 
 ## Finish Runtime Setup
 
-After restarting, install the globally declared Node LTS and Aube versions:
+The one-line installer installs or updates the globally declared Node LTS, Aube, and Pi dependencies. After restarting, verify them and load Aube's shell shims:
 
 ```sh
-mise install
 node --version
 aube --version
 exec zsh
@@ -134,9 +145,10 @@ exec zsh
 
 New Zsh sessions activate Aube's shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`. Aube preserves the project's existing supported lockfile format.
 
-Install the dependencies used by the declarative Pi extensions:
+When using the manual bootstrap instructions or recovering an interrupted runtime setup, reconcile them with:
 
 ```sh
+mise install
 npm ci --prefix ~/.pi/agent
 ```
 
@@ -201,6 +213,7 @@ Because Homebrew cleanup is enabled, a formula or cask installed manually but no
 
 Ask an agent to handle updates deliberately:
 
+- Re-run the one-line installer to fast-forward a clean `main` checkout and apply already-committed configuration and lock-file updates.
 - Update `flake.lock` in a separate commit after reviewing current nix-darwin, Home Manager, nix-homebrew, and Nixpkgs changes.
 - Verify every Homebrew cask still exists under its declared name; Homebrew occasionally renames casks.
 - Let GUI applications with built-in updaters manage their routine releases. System activation intentionally does not force every Homebrew app to upgrade.
