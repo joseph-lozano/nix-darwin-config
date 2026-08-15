@@ -69,6 +69,7 @@ The inputs follow unstable/master branches and were last refreshed in August 202
 - Determinate Nix owns the Nix installation and daemon, so nix-darwin has `nix.enable = false`. Do not add nix-darwin-managed `nix.*` settings unless the ownership model is intentionally changed.
 - `system.primaryUser = "joseph"` ensures Homebrew and user-scoped macOS defaults activate for the intended account.
 - `system.stateVersion = 4` and `home.stateVersion = "24.05"` remain at their original compatibility versions.
+- Setapp itself is installed through Homebrew, while subscription apps such as CleanShot X, TablePlus, and In Your Face are installed from the owner's Setapp Favorites. Do not add standalone Homebrew or App Store copies of those apps unless explicitly requested; they would bypass Setapp licensing and updates.
 
 The following preference decisions remain open; propose them rather than changing them opportunistically:
 

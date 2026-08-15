@@ -26,6 +26,20 @@ sudo nix run nix-darwin/master -- switch --flake '.#Josephs-MacBook-Pro'
 
 Log out and back in after the first activation.
 
+## Finish App Setup
+
+Some app setup is intentionally interactive because it depends on account authentication or private app settings:
+
+1. Open Setapp and sign in. In **Favorites**, click **Install all** to install the saved app collection, including TablePlus, CleanShot X, and In Your Face. Setapp's **Help → Quick Installation** is also available when migrating from another Mac.
+2. Open CleanShot X, grant the requested macOS permissions, then choose **Settings → Shortcuts → Use System Default Shortcuts**. The system configuration frees these shortcuts for CleanShot:
+   - `Command-Shift-3` — capture the full screen
+   - `Command-Shift-4` — capture an area
+   - `Command-Shift-5` — open CleanShot's all-in-one capture menu
+3. Open **Raycast → Settings → General** and set the Raycast hotkey to `Command-Space`. The system configuration disables the conflicting Spotlight shortcut.
+4. Open In Your Face and connect the Google account under its calendar settings. Google OAuth sign-in and consent must be completed interactively; credentials and authorization tokens are not stored in this repository.
+
+Setapp does not automatically sync every managed app's preferences. Use an app's own sync or settings export when it provides one.
+
 ## Development Tools
 
 The configured workflow is centered on agentic coding:
