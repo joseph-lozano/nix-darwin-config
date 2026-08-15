@@ -1,5 +1,8 @@
 { self, pkgs }: {
-  security.pam.services.sudo_local.touchIdAuth = true;
+  security.pam.services.sudo_local = {
+    reattach = true;
+    touchIdAuth = true;
+  };
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
