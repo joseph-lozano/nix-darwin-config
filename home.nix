@@ -12,7 +12,7 @@
       CLICOLOR = 1;
       EDITOR = "cursor --wait";
       VISUAL = "cursor --wait";
-      SSH_AUTH_SOCK = "$HOME/Library/Group\\ Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+      SSH_AUTH_SOCK = "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
     file = {
@@ -87,7 +87,6 @@
         eval "$(/opt/homebrew/bin/brew shellenv)"
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         source ~/.p10k.zsh
-        export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
       '';
     };
 
