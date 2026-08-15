@@ -20,6 +20,7 @@ _: {
       "firefox"
       "ghostty"
       "google-chrome@canary"
+      "handy"
       "livebook"
       "nvidia-geforce-now"
       "ollama"

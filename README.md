@@ -63,6 +63,7 @@ Then complete the steps that require an account, recovery key, backup destinatio
 - [ ] Sign in to 1Password and enable its SSH agent under **Settings → Developer**.
 - [ ] Authenticate GitHub with `gh auth login` and verify SSH access with `ssh -T git@github.com`.
 - [ ] Run `amp` and complete its browser sign-in; connect it to Cursor from Amp's command palette if desired.
+- [ ] Open Handy, grant Microphone and Accessibility access, download a local transcription model, and choose a shortcut that does not conflict with CleanShot X or Raycast.
 - [ ] Review requested permissions for CleanShot X, Raycast, In Your Face, Ghostty, and other trusted apps instead of granting broad access preemptively.
 
 Rosetta 2, the macOS application firewall, stealth mode, and automatic system and security updates are handled by the system configuration.
