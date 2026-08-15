@@ -116,8 +116,7 @@ Some app setup is intentionally interactive because it depends on account authen
 8. Open Handy, grant Microphone and Accessibility access, download a local transcription model, and choose a shortcut that does not conflict with CleanShot X or Raycast.
 9. Open Choosy and make it the default browser handler if its routing behavior is desired.
 10. Open Postgres, initialize and start a local server if needed, then connect TablePlus to it.
-11. Open Ollama before its first use and download only the local models needed; model files can consume significant disk space.
-12. Review requested permissions for Rectangle Pro, Ghostty, and other trusted apps instead of granting broad access preemptively.
+11. Review requested permissions for Rectangle Pro, Ghostty, and other trusted apps instead of granting broad access preemptively.
 
 Setapp does not automatically sync every managed app's preferences. Use an app's own sync or settings export when it provides one.
 

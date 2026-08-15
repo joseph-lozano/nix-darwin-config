@@ -24,7 +24,6 @@ _: {
       "handy"
       "livebook"
       "nvidia-geforce-now"
-      "ollama-app"
       "obsidian"
       "orbstack"
       "postgres-app"
