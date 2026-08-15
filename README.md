@@ -40,6 +40,28 @@ Some app setup is intentionally interactive because it depends on account authen
 
 Setapp does not automatically sync every managed app's preferences. Use an app's own sync or settings export when it provides one.
 
+## Finish Developer and Security Setup
+
+After logging back in, install the globally declared Node LTS and pnpm versions:
+
+```sh
+mise install
+node --version
+pnpm --version
+```
+
+Then complete the steps that require an account, recovery key, backup destination, or macOS consent:
+
+- [ ] Sign in to the Apple Account and enable the desired iCloud services.
+- [ ] Enable FileVault in **System Settings → Privacy & Security → FileVault**, then store the recovery key somewhere other than this repository.
+- [ ] Configure and run the first Time Machine backup.
+- [ ] Sign in to 1Password and enable its SSH agent under **Settings → Developer**.
+- [ ] Authenticate GitHub with `gh auth login` and verify SSH access with `ssh -T git@github.com`.
+- [ ] Run `amp` and complete its browser sign-in; connect it to Cursor from Amp's command palette if desired.
+- [ ] Review requested permissions for CleanShot X, Raycast, In Your Face, Ghostty, and other trusted apps instead of granting broad access preemptively.
+
+Rosetta 2, the macOS application firewall, stealth mode, and automatic system and security updates are handled by the system configuration.
+
 ## Development Tools
 
 The configured workflow is centered on agentic coding:
@@ -49,6 +71,7 @@ The configured workflow is centered on agentic coding:
 - ChatGPT desktop app
 - OpenAI Codex and Pi coding-agent CLIs
 - Herdr terminal multiplexer for persistent agent sessions
+- mise with Node LTS as the only global runtime and pnpm as its package manager
 
 Neovim, other additional editors, and Claude tooling are intentionally not installed.
 
