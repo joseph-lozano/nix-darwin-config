@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "agent-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786556387,
+        "narHash": "sha256-JoLUJ3L3jTmj3U9XM3tbgVhpIbq4Oo4moNxqFyyb3qM=",
+        "owner": "joseph-lozano",
+        "repo": "skills",
+        "rev": "a408fa7e0f0a936448484fdeac9146af57c903e3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "joseph-lozano",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "brew-src": {
       "flake": false,
       "locked": {
@@ -110,6 +126,7 @@
     },
     "root": {
       "inputs": {
+        "agent-skills": "agent-skills",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
         "nix-darwin": "nix-darwin",
