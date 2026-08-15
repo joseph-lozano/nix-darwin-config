@@ -21,6 +21,10 @@
       url = "path:vendor/pi";
       flake = false;
     };
+    plannotator-source = {
+      url = "github:backnotprop/plannotator/v0.27.3";
+      flake = false;
+    };
   };
 
   outputs =
@@ -33,6 +37,7 @@
       homebrew-cask,
       home-manager,
       pi-config,
+      plannotator-source,
     }:
     let
       configuration = { pkgs, ... }: {
@@ -80,7 +85,7 @@
           {
             home-manager = {
               extraSpecialArgs = {
-                inherit agent-skills pi-config;
+                inherit agent-skills pi-config plannotator-source;
               };
               useGlobalPkgs = true;
               users.joseph.imports = [ ./home.nix ];

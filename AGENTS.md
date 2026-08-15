@@ -74,6 +74,7 @@ The inputs follow unstable/master branches and were last refreshed in August 202
 - Home Manager activates mise in Zsh and configures Node LTS and Aube globally. Aube's Zsh activation intentionally routes Node and npm-family package-manager commands through its shims. Other runtimes belong in each project's `mise.toml`; do not add another global runtime unless explicitly requested.
 - Homebrew installs `font-intone-mono-nerd-font`, and Ghostty selects `IntoneMono Nerd Font Mono`. Do not add the duplicate Nixpkgs font package.
 - Home Manager flattens the public `joseph-lozano/skills` input into `~/.agents/skills`. The private Pi submodule supplies static files under `~/.pi/agent`, while `settings.json`, credentials, sessions, package state, and caches remain writable local state. Herdr owns and installs its Pi integration extension.
+- Plannotator is pinned as a release source and Apple-silicon binary in the flake/Home Manager configuration. Home Manager owns its Amp plugin, Codex skills and hook, and Pi package declaration; Plannotator owns its writable local review data.
 - Rosetta 2 installation, the macOS application firewall with stealth mode, and automatic system and security updates are deliberate fresh-Mac defaults.
 
 The following preference decisions remain open; propose them rather than changing them opportunistically:

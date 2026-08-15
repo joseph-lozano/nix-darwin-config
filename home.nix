@@ -2,6 +2,7 @@
   agent-skills,
   lib,
   pi-config,
+  plannotator-source,
   pkgs,
   ...
 }:
@@ -32,6 +33,29 @@ let
           builtins.readDir "${pi-config}/extensions"
         )
       );
+
+  piSettings = builtins.fromJSON (builtins.readFile "${pi-config}/settings.json");
+  piSettingsFile = pkgs.writeText "pi-settings.json" (
+    builtins.toJSON (
+      piSettings
+      // {
+        packages = lib.unique ((piSettings.packages or [ ]) ++ [ "npm:@plannotator/pi-extension@0.27.3" ]);
+      }
+    )
+  );
+
+  plannotator = pkgs.stdenvNoCC.mkDerivation {
+    pname = "plannotator";
+    version = "0.27.3";
+    src = pkgs.fetchurl {
+      url = "https://github.com/backnotprop/plannotator/releases/download/v0.27.3/plannotator-darwin-arm64";
+      hash = "sha256-JNRrgjbYZL7wXRCprNIU6jMtxbPEvOb2u3SRl5LLJek=";
+    };
+    dontUnpack = true;
+    installPhase = ''
+      install -Dm755 "$src" "$out/bin/plannotator"
+    '';
+  };
 in
 {
   imports = [
@@ -56,8 +80,34 @@ in
       // {
         ".p10k.zsh".source = ./home/p10k.zsh;
 
-        ".codex/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
+        ".agents/skills/plannotator-annotate".source =
+          "${plannotator-source}/apps/skills/core/plannotator-annotate";
+        ".agents/skills/plannotator-last".source =
+          "${plannotator-source}/apps/skills/core/plannotator-last";
+        ".agents/skills/plannotator-review".source =
+          "${plannotator-source}/apps/skills/core/plannotator-review";
 
+        ".codex/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
+        ".codex/config.toml".text = ''
+          [features]
+          hooks = true
+        '';
+        ".codex/hooks.json".text = builtins.toJSON {
+          hooks.Stop = [
+            {
+              hooks = [
+                {
+                  type = "command";
+                  command = "${plannotator}/bin/plannotator";
+                  timeout = 345600;
+                }
+              ];
+            }
+          ];
+        };
+
+        ".config/amp/plugins/plannotator.ts".source =
+          "${plannotator-source}/apps/amp-plugin/plannotator.ts";
         ".config/ghostty/config".text = ''
           font-family="IntoneMono Nerd Font Mono"
           theme=catppuccin-mocha
@@ -95,6 +145,7 @@ in
       pkgs.jq
       pkgs.less
       pkgs.pi-coding-agent
+      plannotator
       pkgs.tree
       pkgs.vim
       pkgs.wget
@@ -108,7 +159,7 @@ in
   home.activation.installPiConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     pi_dir="$HOME/.pi/agent"
     $DRY_RUN_CMD mkdir -p "$pi_dir/extensions"
-    $DRY_RUN_CMD install -m 0644 ${pi-config}/settings.json "$pi_dir/settings.json"
+    $DRY_RUN_CMD install -m 0644 ${piSettingsFile} "$pi_dir/settings.json"
     $DRY_RUN_CMD ${pkgs.herdr}/bin/herdr integration install pi
   '';
 

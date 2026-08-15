@@ -121,6 +121,7 @@ Some app setup is intentionally interactive because it depends on account authen
 9. Open Google Chrome, create `Personal` and `Work` profiles, and sign in to each. Profile authentication, cookies, extensions, and sync state are intentionally not managed by Nix. In Choosy, use the add button to add both Chrome profiles, make Choosy the default browser handler, and create any desired work/personal routing rules.
 10. Open Postgres, initialize and start a local server if needed, then connect TablePlus to it.
 11. Review requested permissions for Rectangle Pro, Ghostty, and other trusted apps instead of granting broad access preemptively.
+12. Restart Amp or run `plugins: reload`, restart Codex Desktop so its plan-review hook is loaded, then start Pi and run `/plannotator` to verify its extension.
 
 Setapp does not automatically sync every managed app's preferences. Use an app's own sync or settings export when it provides one.
 
@@ -143,7 +144,7 @@ Install the dependencies used by the declarative Pi extensions:
 npm ci --prefix ~/.pi/agent
 ```
 
-Pi automatically installs the `pi-cursor-sdk` package declared by the pinned configuration. Start `pi` and use `/login` for the configured xAI and Cursor providers. The Exa and Firecrawl extensions are optional and require `EXA_API_KEY` and `FIRECRAWL_API_KEY`, respectively; do not store those keys in this repository.
+Pi automatically installs the `pi-cursor-sdk` and pinned Plannotator extension packages declared by the combined configuration. Start `pi` and use `/login` for the configured xAI and Cursor providers. The Exa and Firecrawl extensions are optional and require `EXA_API_KEY` and `FIRECRAWL_API_KEY`, respectively; do not store those keys in this repository.
 
 Pi updates `settings.json` during normal use. Home Manager refreshes that writable file from `joseph-lozano/pi` on each activation, so persistent settings changes should be committed to that repository before rebuilding this configuration.
 
@@ -181,6 +182,7 @@ The configured workflow is centered on agentic coding:
 - Bare terminal Vim for `EDITOR`, `VISUAL`, Git commits, and other interactive prompts
 - ChatGPT desktop app
 - OpenAI Codex and Pi coding-agent CLIs
+- Plannotator for local plan annotation and code review in Amp, Codex, and Pi
 - Docker Sandboxes for running Codex in isolated microVMs and OrbStack for regular Docker and Compose workloads
 - Herdr terminal multiplexer for persistent agent sessions
 - mise with Node LTS as the only global runtime and Aube with its shell shims as the package manager
