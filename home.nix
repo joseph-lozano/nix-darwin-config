@@ -110,7 +110,7 @@ in
           "${plannotator-source}/apps/amp-plugin/plannotator.ts";
         ".config/ghostty/config".text = ''
           font-family="IntoneMono Nerd Font Mono"
-          theme=catppuccin-mocha
+          theme=Catppuccin Mocha
           font-size=22
         '';
 
