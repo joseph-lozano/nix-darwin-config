@@ -10,8 +10,8 @@
     sessionVariables = {
       PAGER = "less";
       CLICOLOR = 1;
-      EDITOR = "cursor --wait";
-      VISUAL = "cursor --wait";
+      EDITOR = "vim";
+      VISUAL = "vim";
       SSH_AUTH_SOCK = "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
@@ -48,6 +48,7 @@
       pkgs.pi-coding-agent
       pkgs.pre-commit
       pkgs.tree
+      pkgs.vim
       pkgs.wget
       pkgs.yt-dlp
       pkgs.zoxide

@@ -26,7 +26,7 @@ _: {
           autoSetupRemote = true;
         };
         core = {
-          editor = "cursor --wait";
+          editor = "vim";
           fileMode = false;
           ignorecase = false;
         };

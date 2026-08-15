@@ -4,7 +4,7 @@
 
 This is Joseph Lozano's personal nix-darwin configuration for provisioning Apple-silicon Macs. It is not intended to be reusable by other users. Prefer direct, readable configuration over parameters, host matrices, helper modules, or other abstractions that only make a single-user setup more generic.
 
-The coding workflow is agent-first: Cursor is the editor, Pi and Codex are the terminal coding agents, ChatGPT is the desktop AI client, and Herdr is the terminal multiplexer. Do not add Vim/Neovim configuration or Claude tooling unless explicitly requested.
+The coding workflow is agent-first: Cursor is the primary coding editor, bare Vim handles terminal and Git editing, Pi and Codex are the terminal coding agents, ChatGPT is the desktop AI client, and Herdr is the terminal multiplexer. Do not add Vim plugins or configuration, Neovim or other editors, or Claude tooling unless explicitly requested.
 
 The current identity is intentionally fixed:
 

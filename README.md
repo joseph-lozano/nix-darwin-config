@@ -44,12 +44,13 @@ Setapp does not automatically sync every managed app's preferences. Use an app's
 
 The configured workflow is centered on agentic coding:
 
-- Cursor desktop and CLI, configured for `EDITOR`, `VISUAL`, and Git
+- Cursor desktop and CLI as the primary coding workspace
+- Bare terminal Vim for `EDITOR`, `VISUAL`, Git commits, and other interactive prompts
 - ChatGPT desktop app
 - OpenAI Codex and Pi coding-agent CLIs
 - Herdr terminal multiplexer for persistent agent sessions
 
-Vim, Neovim, and Claude tooling are intentionally not installed.
+Neovim, other additional editors, and Claude tooling are intentionally not installed.
 
 ## Make and Apply Changes
 
