@@ -136,6 +136,23 @@
       },
       "parent": []
     },
+    "plannotator-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786662373,
+        "narHash": "sha256-h/5xMnpoQeTuF4H+BO4TZDXVGjUSJwvARz/hkrCnVZ4=",
+        "owner": "backnotprop",
+        "repo": "plannotator",
+        "rev": "aa0bf860d8fae719fa0fd9056069000234077674",
+        "type": "github"
+      },
+      "original": {
+        "owner": "backnotprop",
+        "ref": "v0.27.3",
+        "repo": "plannotator",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agent-skills": "agent-skills",
@@ -144,7 +161,8 @@
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs",
-        "pi-config": "pi-config"
+        "pi-config": "pi-config",
+        "plannotator-source": "plannotator-source"
       }
     }
   },
