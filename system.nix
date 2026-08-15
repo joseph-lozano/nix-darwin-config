@@ -28,6 +28,27 @@
     NSGlobalDomain.KeyRepeat = 2;
   };
 
+  system.activationScripts.postActivation.text = ''
+    # Preserve unrelated macOS shortcuts while freeing screenshot shortcuts for CleanShot X.
+    disable_symbolic_hotkey() {
+      /bin/launchctl asuser "$(/usr/bin/id -u joseph)" \
+        /usr/bin/sudo --user=joseph -- \
+        /usr/bin/defaults write com.apple.symbolichotkeys \
+          AppleSymbolicHotKeys -dict-add "$1" \
+          '<dict><key>enabled</key><false/></dict>'
+    }
+
+    disable_symbolic_hotkey 28  # Shift-Command-3: capture the screen
+    disable_symbolic_hotkey 29  # Control-Shift-Command-3: copy the screen
+    disable_symbolic_hotkey 30  # Shift-Command-4: capture an area
+    disable_symbolic_hotkey 31  # Control-Shift-Command-4: copy an area
+    disable_symbolic_hotkey 184 # Shift-Command-5: screenshot and recording options
+
+    /bin/launchctl asuser "$(/usr/bin/id -u joseph)" \
+      /usr/bin/sudo --user=joseph -- \
+      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
+
   system.keyboard = {
     enableKeyMapping = true;
     swapLeftCommandAndLeftAlt = true;
