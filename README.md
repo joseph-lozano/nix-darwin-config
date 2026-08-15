@@ -114,7 +114,7 @@ Some app setup is intentionally interactive because it depends on account authen
 6. Open Obsidian and create or open the intended vault. Choose Obsidian Sync, iCloud Drive, or local-only storage in the app rather than storing vault contents in this repository.
 7. Install the [official Obsidian Web Clipper](https://obsidian.md/clipper) in each browser where it will be used, review its requested website access, then select the intended vault and clipping folder.
 8. Open Handy, grant Microphone and Accessibility access, download a local transcription model, and choose a shortcut that does not conflict with CleanShot X or Raycast.
-9. Open Choosy and make it the default browser handler if its routing behavior is desired.
+9. Open Google Chrome, create `Personal` and `Work` profiles, and sign in to each. Profile authentication, cookies, extensions, and sync state are intentionally not managed by Nix. In Choosy, use the add button to add both Chrome profiles, make Choosy the default browser handler, and create any desired work/personal routing rules.
 10. Open Postgres, initialize and start a local server if needed, then connect TablePlus to it.
 11. Review requested permissions for Rectangle Pro, Ghostty, and other trusted apps instead of granting broad access preemptively.
 
