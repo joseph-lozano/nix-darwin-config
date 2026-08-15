@@ -44,7 +44,6 @@
       pkgs.jq
       pkgs.less
       pkgs.pi-coding-agent
-      pkgs.pre-commit
       pkgs.tree
       pkgs.vim
       pkgs.wget
