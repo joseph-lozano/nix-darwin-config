@@ -33,7 +33,7 @@ Keep behavior in the file that already owns it. Do not add a new module for a sm
 - Ask before changing package/cask selections, macOS defaults, the Nix ownership model, Homebrew cleanup/tap behavior, input refs, or the lock file.
 - Treat `flake.lock` updates as a separate change. Never update it incidentally while formatting, evaluating, or fixing unrelated configuration.
 - Never bump `system.stateVersion` or `home.stateVersion` as part of a routine upgrade. They preserve compatibility and should change only after reviewing the relevant migration notes and receiving explicit approval.
-- `homebrew.onActivation.cleanup = "zap"` can remove unmanaged packages and associated files. Call out that impact before changing or activating Homebrew configuration.
+- `homebrew.onActivation.cleanup = "uninstall"` removes unmanaged packages during activation. Call out that impact before changing or activating Homebrew configuration.
 - Never run `darwin-rebuild switch` or otherwise activate the system without explicit approval. Evaluation and non-activating builds are safe defaults.
 - Do not add secrets, private keys, access tokens, or machine-specific credentials. The Git signing key already present is a public key.
 - Preserve unrelated personal preferences even when a more conventional setting exists.
@@ -43,6 +43,7 @@ Keep behavior in the file that already owns it. Do not add a new module for a sm
 Run checks without modifying the lock file:
 
 ```sh
+nix fmt
 nix flake check --no-update-lock-file --show-trace
 nix build --no-link --no-update-lock-file '.#darwinConfigurations.Josephs-MacBook-Pro.system'
 ```
@@ -59,7 +60,7 @@ Only after explicit approval, activate with:
 sudo darwin-rebuild switch --flake '.#Josephs-MacBook-Pro'
 ```
 
-This repository currently declares no formatter or automated tests. Match the existing two-space Nix style, avoid unrelated reformatting, and always run `git diff --check`. If Nix is unavailable or a Darwin build cannot run in the current environment, report that limitation rather than claiming validation passed.
+This repository has no automated tests beyond its flake evaluation and system build. Use the declared formatter for Nix files, avoid unrelated reformatting, and always run `git diff --check`. If Nix is unavailable or a Darwin build cannot run in the current environment, report that limitation rather than claiming validation passed.
 
 ## Upgrade Notes
 

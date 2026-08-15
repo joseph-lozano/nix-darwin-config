@@ -42,6 +42,7 @@ Vim, Neovim, and Claude tooling are intentionally not installed.
 Evaluate and build changes without activating them:
 
 ```sh
+nix fmt
 nix flake check --no-update-lock-file --show-trace
 darwin-rebuild build --flake '.#Josephs-MacBook-Pro'
 ```

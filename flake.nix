@@ -14,12 +14,21 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-cask
-    , home-manager }:
+  outputs =
+    inputs@{
+      self,
+      nix-darwin,
+      nixpkgs,
+      nix-homebrew,
+      homebrew-cask,
+      home-manager,
+    }:
     let
       configuration = { pkgs, ... }: {
-        imports =
-          [ (import ./system.nix { inherit self pkgs; }) ./homebrew.nix ];
+        imports = [
+          (import ./system.nix { inherit self pkgs; })
+          ./homebrew.nix
+        ];
 
         # Determinate Nix manages the Nix installation and daemon.
         nix.enable = false;
@@ -37,9 +46,10 @@
           shell = pkgs.zsh;
         };
       };
-    in {
+    in
+    {
       # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#simple
+      # $ darwin-rebuild build --flake .#Josephs-MacBook-Pro
       darwinConfigurations."Josephs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
@@ -48,17 +58,24 @@
               enable = true;
               user = "joseph";
               autoMigrate = true;
-              taps = { "homebrew/homebrew-cask" = homebrew-cask; };
+              taps = {
+                "homebrew/homebrew-cask" = homebrew-cask;
+              };
             };
           }
 
           configuration
           home-manager.darwinModules.home-manager
-          { home-manager = { users.joseph.imports = [ ./home.nix ]; }; }
+          {
+            home-manager = {
+              users.joseph.imports = [ ./home.nix ];
+            };
+          }
         ];
       };
 
-      # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."Josephs-MacBook-Pro".pkgs;
+      checks.aarch64-darwin.default = self.darwinConfigurations."Josephs-MacBook-Pro".system;
+
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
     };
 }
