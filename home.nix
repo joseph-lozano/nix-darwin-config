@@ -1,4 +1,24 @@
-{ lib, pkgs, ... }: {
+{
+  agent-skills,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  skillFilesFrom =
+    directory:
+    lib.mapAttrs' (
+      name: _:
+      lib.nameValuePair ".agents/skills/${name}" {
+        source = "${directory}/${name}";
+      }
+    ) (lib.filterAttrs (_: type: type == "directory") (builtins.readDir directory));
+
+  agentSkillFiles =
+    skillFilesFrom "${agent-skills}/skills/engineering"
+    // skillFilesFrom "${agent-skills}/skills/productivity";
+in
+{
   imports = [
     ./home/git.nix
     ./home/zsh.nix
@@ -15,7 +35,7 @@
       SSH_AUTH_SOCK = "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
-    file = {
+    file = agentSkillFiles // {
       ".p10k.zsh".source = ./home/p10k.zsh;
 
       ".codex/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";

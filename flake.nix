@@ -2,6 +2,10 @@
   description = "Joseph's nix-darwin configuration";
 
   inputs = {
+    agent-skills = {
+      url = "github:joseph-lozano/skills";
+      flake = false;
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -17,6 +21,7 @@
   outputs =
     inputs@{
       self,
+      agent-skills,
       nix-darwin,
       nixpkgs,
       nix-homebrew,
@@ -68,6 +73,7 @@
           home-manager.darwinModules.home-manager
           {
             home-manager = {
+              extraSpecialArgs = { inherit agent-skills; };
               useGlobalPkgs = true;
               users.joseph.imports = [ ./home.nix ];
             };
