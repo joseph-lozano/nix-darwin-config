@@ -103,7 +103,7 @@ Complete the steps that require an account, recovery key, backup destination, or
 
 Some app setup is intentionally interactive because it depends on account authentication or private app settings:
 
-1. Open Setapp and sign in. In **Favorites**, click **Install all** to install the saved app collection, including TablePlus, CleanShot X, and In Your Face. Setapp's **Help → Quick Installation** is also available when migrating from another Mac.
+1. Open Setapp and sign in. Review **Favorites** before installing anything because the repository cannot audit that account-managed list. Install TablePlus, CleanShot X, In Your Face, and only the other favorites still wanted; do not use **Install all** until obsolete favorites have been removed. Setapp's **Help → Quick Installation** is also available when migrating from another Mac.
 2. Open CleanShot X, grant the requested macOS permissions, then choose **Settings → Shortcuts → Use System Default Shortcuts**. The system configuration frees these shortcuts for CleanShot:
    - `Command-Shift-3` — capture the full screen
    - `Command-Shift-4` — capture an area
