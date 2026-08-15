@@ -42,12 +42,12 @@ Setapp does not automatically sync every managed app's preferences. Use an app's
 
 ## Finish Developer and Security Setup
 
-After logging back in, install the globally declared Node LTS and pnpm versions:
+After logging back in, install the globally declared Node LTS and Aube versions:
 
 ```sh
 mise install
 node --version
-pnpm --version
+aube --version
 ```
 
 Then complete the steps that require an account, recovery key, backup destination, or macOS consent:
@@ -71,7 +71,7 @@ The configured workflow is centered on agentic coding:
 - ChatGPT desktop app
 - OpenAI Codex and Pi coding-agent CLIs
 - Herdr terminal multiplexer for persistent agent sessions
-- mise with Node LTS as the only global runtime and pnpm as its package manager
+- mise with Node LTS as the only global runtime and Aube as its package manager
 
 Neovim, other additional editors, and Claude tooling are intentionally not installed.
 

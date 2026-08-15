@@ -63,8 +63,8 @@
       enableMutableConfig = true;
       enableZshIntegration = true;
       globalConfig.tools = {
+        aube = "latest";
         node = "lts";
-        pnpm = "latest";
       };
     };
 
@@ -83,7 +83,6 @@
       enable = true;
       shellAliases = {
         phx = "iex -S mix phx.server";
-        pn = "pnpm";
       };
       oh-my-zsh = {
         enable = true;
