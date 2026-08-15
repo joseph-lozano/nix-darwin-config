@@ -23,6 +23,7 @@ _: {
       "livebook"
       "nvidia-geforce-now"
       "ollama"
+      "obsidian"
       "orbstack"
       "postgres-unofficial"
       "raycast"

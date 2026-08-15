@@ -38,6 +38,7 @@ Some app setup is intentionally interactive because it depends on account authen
 3. Open **Raycast → Settings → General** and set the Raycast hotkey to `Command-Space`. The system configuration disables the conflicting Spotlight shortcut.
 4. Open In Your Face and connect the Google account under its calendar settings. Google OAuth sign-in and consent must be completed interactively; credentials and authorization tokens are not stored in this repository.
 5. Open Tailscale, approve its VPN configuration, sign in to the intended tailnet, and verify the connection with `tailscale status`.
+6. Open Obsidian and create or open the intended vault. Choose Obsidian Sync, iCloud Drive, or local-only storage in the app rather than storing vault contents in this repository.
 
 Setapp does not automatically sync every managed app's preferences. Use an app's own sync or settings export when it provides one.
 
