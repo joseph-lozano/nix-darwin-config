@@ -30,12 +30,24 @@ if [[ ! -f "$pam_module" ]]; then
 fi
 
 pam_config="$(mktemp)"
-trap 'rm -f "$pam_config"' EXIT
-cat >"$pam_config" <<EOF
-# sudo_local: local config file which survives system updates and is included for sudo
-auth       optional       $pam_module ignore_ssh
-auth       sufficient     pam_tid.so
-EOF
+pam_existing="$(mktemp)"
+trap 'rm -f "$pam_config" "$pam_existing"' EXIT
+if sudo /bin/test -f /etc/pam.d/sudo_local; then
+  sudo /bin/cat /etc/pam.d/sudo_local | /bin/cat >"$pam_existing"
+fi
+
+pam_marker="# Managed by ~/nix-darwin-config/scripts/macos.sh; other lines are preserved."
+{
+  printf '%s\n' "$pam_marker"
+  printf 'auth       optional       %s ignore_ssh\n' "$pam_module"
+  printf '%s\n' "auth       sufficient     pam_tid.so"
+  /usr/bin/awk -v marker="$pam_marker" '
+    $0 == marker { next }
+    /pam_reattach\.so/ { next }
+    /pam_tid\.so/ { next }
+    { print }
+  ' "$pam_existing"
+} >"$pam_config"
 sudo /usr/bin/install -o root -g wheel -m 0444 "$pam_config" /etc/pam.d/sudo_local
 
 /usr/bin/defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
