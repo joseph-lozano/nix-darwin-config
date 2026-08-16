@@ -1,0 +1,31 @@
+[user]
+	name = Joseph Lozano
+	email = me@lozanojoseph.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIANVfta972guG1JXAiGa9x64dsBShEbDL4ps7Yxqb9I+
+[github]
+	user = joseph-lozano
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[push]
+	autoSetupRemote = true
+[core]
+	editor = vim
+	fileMode = false
+	ignorecase = false
+	excludesFile = ~/.config/git/ignore
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	syntax-theme = TwoDark
+	side-by-side = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[alias]
+	hist = log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short
