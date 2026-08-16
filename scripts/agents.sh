@@ -75,11 +75,14 @@ skills_repo="$HOME/.local/share/joseph-agent-skills"
 sync_repo https://github.com/joseph-lozano/pi.git "$pi_config_repo"
 sync_repo https://github.com/joseph-lozano/skills.git "$skills_repo"
 
-# Pi's custom extensions resolve exa-js and firecrawl relative to this checkout.
+# Install the runtime dependencies declared by Joseph's Pi configuration.
 mise exec node@lts -- npm ci --prefix "$pi_config_repo"
 
 pi_dir="$HOME/.pi/agent"
 mkdir -p "$pi_dir/extensions" "$pi_dir/themes"
+# Pi imports extensions through their paths under ~/.pi/agent rather than resolving
+# symlinks first, so expose the checkout's dependencies at that visible parent.
+link_static_file "$pi_config_repo/node_modules" "$pi_dir/node_modules"
 link_static_file "$pi_config_repo/AGENTS.md" "$pi_dir/AGENTS.md"
 link_static_file "$pi_config_repo/cloak.json" "$pi_dir/cloak.json"
 

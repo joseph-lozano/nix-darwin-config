@@ -58,7 +58,7 @@ done
 
 check_runs "Amp starts successfully" amp --version
 check_runs "Codex starts successfully" codex --version
-check_runs "Pi starts successfully" pi --version
+check_runs "Pi loads configured extensions" pi --help --offline
 check_runs "Aube's npm shim starts successfully" npm --version
 check_runs "Pi's explicit mise/npm route starts successfully" \
   mise exec node@lts -- npm --version
