@@ -1,240 +1,183 @@
-# Nix Darwin Config
+# Joseph's Mac Setup
 
-Personal nix-darwin configuration for Joseph's Apple-silicon Mac. It is intentionally fixed to:
+Personal, agent-first setup for Joseph's Apple-silicon Mac. It is intentionally fixed to the macOS user `joseph`, home directory `/Users/joseph`, and native `arm64`. It is not designed as a reusable multi-user framework.
 
-- macOS short username: `joseph`
-- Home directory: `/Users/joseph`
-- Platform: `aarch64-darwin`
-- Flake configuration: `Josephs-MacBook-Pro`
-
-The `Josephs-MacBook-Pro` value is only the flake configuration's existing name. It does not set the computer's model or hostname, so use that exact value on the new MacBook Air too.
-
-> [!WARNING]
-> Activation manages Homebrew declaratively and uses `cleanup = "uninstall"`. Every Homebrew formula or cask not listed in this repository is removed during activation. That is harmless on a fresh Mac, but add future Homebrew software to the configuration before activating it.
+This repository uses Homebrew Bundle, mise, GNU Stow, and small shell scripts. It does **not** install Nix, nix-darwin, Home Manager, Ansible, or Chezmoi.
 
 ## Install or Update
 
-After completing macOS Setup Assistant, open Terminal and run the same command for the initial installation and future configuration updates:
+After macOS Setup Assistant creates the `joseph` account, open Terminal and run:
 
 ```sh
 curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/joseph-lozano/nix-darwin-config/main/install.sh | sh
 ```
 
-On a new Mac, the script installs missing prerequisites, clones this repository, validates the complete system, asks before activation, and installs the declared Node LTS, Aube, and Pi dependencies. On subsequent runs, it requires a clean `main` checkout, fast-forwards it to `origin/main`, and reapplies the configuration. It uses the repository's committed `flake.lock`; it never changes dependency pins implicitly. Restart a newly installed Mac after it succeeds, then complete the account and app checklists below.
+The same command handles both a fresh install and future updates. It:
 
-Review [`install.sh`](install.sh) before running it if desired. The manual equivalent is retained below for troubleshooting.
+1. validates the user, home directory, macOS, and Apple-silicon architecture;
+2. waits for Apple Command Line Tools installation when needed;
+3. clones this repository to `~/nix-darwin-config`, or fast-forwards an existing clean `main` checkout;
+4. installs Homebrew and installs or upgrades the [`Brewfile`](Brewfile);
+5. links genuinely static Git, SSH, Zsh, Powerlevel10k, and Ghostty files with Stow;
+6. installs Amp, Codex, mise, Node LTS, Aube, Pi, Plannotator, skills, and agent integrations using their supported ownership paths;
+7. applies the macOS security, keyboard, shortcut, and Dock settings; and
+8. runs [`scripts/verify.sh`](scripts/verify.sh) and fails if the expected setup is incomplete.
 
-## Manual Bootstrap
+The update path refuses to overwrite a dirty checkout or merge a divergent branch. Homebrew upgrades declared software but does **not** run destructive `brew bundle cleanup`, so unrelated software is not silently removed.
 
-### 1. Verify the Mac and account
+Review [`install.sh`](install.sh) before piping it to a shell if desired. Keep the Mac connected to power and the internet during the first run. Restart after it completes.
 
-Finish macOS Setup Assistant, install any pending macOS updates, and verify the account and architecture in Terminal:
+## Ownership Model
 
-```sh
-whoami
-uname -m
-```
+| Owner | What it manages |
+| --- | --- |
+| Homebrew Bundle | Conventional CLI tools, GUI apps, Herdr, OrbStack, Docker Sandboxes, and the IntoneMono Nerd Font |
+| Official installers | Amp, Codex, mise, and the Plannotator binary |
+| mise | Node LTS and Aube; Node is the only global language runtime |
+| npm under mise's Node | Pi's CLI |
+| GNU Stow | Only static dotfiles committed under `stow/` |
+| Setup scripts | macOS defaults, selected agent integrations, and static files sourced from Joseph's public config repositories |
+| Applications | Credentials, sessions, trust, caches, package stores, and other mutable state |
 
-These commands must print `joseph` and `arm64`. Stop if either value differs; this configuration deliberately does not support another username or Intel Mac.
+The last boundary is deliberate. `~/.codex/config.toml` must remain writable because Codex stores project trust there. `~/.pi/agent/settings.json` must remain writable because Pi updates settings and package declarations. Amp, Herdr, Plannotator, Pi, Codex, Setapp, and mise data directories are not Stow-managed.
 
-### 2. Install the command line tools
+## Fresh Mac Checklist
 
-Start Apple's Command Line Tools installer:
-
-```sh
-xcode-select --install
-```
-
-Wait for the graphical installer to finish, then verify it before continuing:
-
-```sh
-xcode-select -p
-git --version
-```
-
-### 3. Install Nix
-
-Install [Determinate Nix](https://determinate.systems/install/). Determinate Nix owns the Nix installation and daemon; nix-darwin intentionally does not replace them.
-
-```sh
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-```
-
-When the installer finishes, quit and reopen Terminal so its environment is loaded, then verify:
-
-```sh
-nix --version
-```
-
-Do not install Homebrew separately. The first nix-darwin activation installs and manages Apple-silicon Homebrew through nix-homebrew.
-
-### 4. Download and check the configuration
-
-```sh
-git clone https://github.com/joseph-lozano/nix-darwin-config.git
-cd nix-darwin-config
-git status --short --branch
-```
-
-The status should show a clean `main` branch tracking `origin/main`. Evaluate and build the complete system without activating it:
-
-```sh
-nix flake check --no-update-lock-file --show-trace
-nix build --no-link --no-update-lock-file '.#darwinConfigurations.Josephs-MacBook-Pro.system'
-```
-
-### 5. Activate the system
-
-The first activation downloads the declared Nix packages and Homebrew apps, installs Rosetta 2 when needed, and changes the system preferences described below. Keep the Mac connected to power and the internet.
-
-```sh
-sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake '.#Josephs-MacBook-Pro'
-```
-
-Do not continue if this command reports an error. After it succeeds, restart the Mac, open Terminal, and verify the managed tools:
-
-```sh
-command -v darwin-rebuild brew mise
-nix --version
-brew --version
-mise --version
-```
-
-## Finish Account and Security Setup
-
-Complete the steps that require an account, recovery key, backup destination, or macOS consent:
+### Account and security
 
 - [ ] Sign in to the Apple Account and enable the desired iCloud services.
-- [ ] Verify FileVault under **System Settings → Privacy & Security → FileVault**, enable it if needed, and store the recovery key somewhere other than this repository.
+- [ ] Install all pending macOS updates.
+- [ ] Enable and verify FileVault under **System Settings → Privacy & Security → FileVault**. Store the recovery key outside this repository.
 - [ ] Configure Time Machine and complete its first backup.
-- [ ] Sign in to 1Password. Under **Settings → Developer**, enable its SSH agent and **Integrate with 1Password CLI**; enable Touch ID under **Settings → Security**, then verify CLI access with `op vault list`.
-- [ ] Confirm that 1Password contains the SSH key used for GitHub and Git signing, then run `gh auth login` and verify SSH access with `ssh -T git@github.com`.
-- [ ] Run `amp` and complete its browser sign-in; connect it to Cursor from Amp's command palette if desired.
+- [ ] Sign in to 1Password. Under **Settings → Developer**, enable the SSH agent and **Integrate with 1Password CLI**. Under **Settings → Security**, enable Touch ID.
+- [ ] Run `op vault list`, `gh auth login`, and `ssh -T git@github.com`.
+- [ ] Run `amp`, `codex`, and `pi` once and complete each required sign-in. In Pi, use `/login` for the configured providers.
 
-## Finish App Setup
+### Apps and permissions
 
-Some app setup is intentionally interactive because it depends on account authentication or private app settings:
+1. **Setapp:** Sign in, review Favorites, then install TablePlus, CleanShot X, In Your Face, and only the other subscription apps still wanted. Do not install duplicate standalone Homebrew copies; Setapp should own their licensing and updates.
+2. **CleanShot X:** Grant Screen Recording and other requested permissions. In **Settings → Shortcuts**, choose **Use System Default Shortcuts**. The setup frees `Command-Shift-3`, `Command-Shift-4`, and `Command-Shift-5` from Apple's screenshot service.
+3. **Raycast:** Open **Settings → General**, select `Command-Space` as the Raycast hotkey, enable launch at login, and grant Accessibility. The script disables Spotlight's conflicting shortcut, but Raycast must claim it once inside the app.
+4. **In Your Face:** Connect the intended Google Calendar account. Google OAuth and consent are intentionally interactive and cannot be safely provisioned by this repository.
+5. **Tailscale:** Approve the VPN configuration, sign in to the intended tailnet, and verify with `tailscale status`.
+6. **Obsidian:** Create or open the intended vault and select Obsidian Sync, iCloud Drive, or local-only storage. Install the [official Obsidian Web Clipper](https://obsidian.md/clipper) in each browser and select its vault and clipping folder.
+7. **Handy:** Grant Microphone and Accessibility access, download a local transcription model, and choose a shortcut that does not conflict with Raycast or CleanShot X.
+8. **Chrome and Choosy:** Create `Personal` and `Work` Chrome profiles and sign in. Add both profiles to Choosy, make Choosy the default browser handler, and create the desired routing rules. Profile auth, cookies, extensions, and sync state stay browser-owned.
+9. **Postgres:** Open Postgres.app, initialize and start a local server, then connect TablePlus to it.
+10. **OrbStack:** Open it once and approve its helper. It owns normal Docker and Compose workloads; Docker Desktop is intentionally absent.
+11. **Rectangle Pro, Ghostty, ScreenFlow, and other apps:** Grant only the permissions needed for the desired features.
+12. **Plannotator:** Restart Amp or run `plugins: reload`, restart Codex Desktop, and restart Pi so their installed integration files load.
 
-1. Open Setapp and sign in. Review **Favorites** before installing anything because the repository cannot audit that account-managed list. Install TablePlus, CleanShot X, In Your Face, and only the other favorites still wanted; do not use **Install all** until obsolete favorites have been removed. Setapp's **Help → Quick Installation** is also available when migrating from another Mac.
-2. Open CleanShot X, grant the requested macOS permissions, then choose **Settings → Shortcuts → Use System Default Shortcuts**. The system configuration frees these shortcuts for CleanShot:
-   - `Command-Shift-3` — capture the full screen
-   - `Command-Shift-4` — capture an area
-   - `Command-Shift-5` — open CleanShot's all-in-one capture menu
-3. Open **Raycast → Settings → General** and set the Raycast hotkey to `Command-Space`. The system configuration disables the conflicting Spotlight shortcut.
-4. Open In Your Face and connect the Google account under its calendar settings. Google OAuth sign-in and consent must be completed interactively; credentials and authorization tokens are not stored in this repository.
-5. Open Tailscale, approve its VPN configuration, sign in to the intended tailnet, and verify the connection with `tailscale status`.
-6. Open Obsidian and create or open the intended vault. Choose Obsidian Sync, iCloud Drive, or local-only storage in the app rather than storing vault contents in this repository.
-7. Install the [official Obsidian Web Clipper](https://obsidian.md/clipper) in each browser where it will be used, review its requested website access, then select the intended vault and clipping folder.
-8. Open Handy, grant Microphone and Accessibility access, download a local transcription model, and choose a shortcut that does not conflict with CleanShot X or Raycast.
-9. Open Google Chrome, create `Personal` and `Work` profiles, and sign in to each. Profile authentication, cookies, extensions, and sync state are intentionally not managed by Nix. In Choosy, use the add button to add both Chrome profiles, make Choosy the default browser handler, and create any desired work/personal routing rules.
-10. Open Postgres, initialize and start a local server if needed, then connect TablePlus to it.
-11. Review requested permissions for Rectangle Pro, Ghostty, and other trusted apps instead of granting broad access preemptively.
-12. Restart Amp or run `plugins: reload`, restart Codex Desktop so its plan-review hook is loaded, then start Pi and run `/plannotator` to verify its extension.
+Setapp and most GUI apps do not synchronize every preference. Use each application's own settings sync or export when available.
 
-Setapp does not automatically sync every managed app's preferences. Use an app's own sync or settings export when it provides one.
+### Docker Sandboxes
 
-## Finish Runtime Setup
-
-The one-line installer installs or updates the globally declared Node LTS, Aube, and Pi dependencies. After restarting, verify them and load Aube's shell shims:
-
-```sh
-node --version
-aube --version
-exec zsh
-```
-
-New Zsh sessions activate Aube's shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`. Aube preserves the project's existing supported lockfile format.
-
-When using the manual bootstrap instructions or recovering an interrupted runtime setup, reconcile them with:
-
-```sh
-mise install
-npm ci --prefix ~/.pi/agent
-```
-
-Pi automatically installs the `pi-cursor-sdk` and pinned Plannotator extension packages declared by the combined configuration. Start `pi` and use `/login` for the configured xAI and Cursor providers. The Exa and Firecrawl extensions are optional and require `EXA_API_KEY` and `FIRECRAWL_API_KEY`, respectively; do not store those keys in this repository.
-
-Pi updates `settings.json` during normal use. Home Manager refreshes that writable file from `joseph-lozano/pi` on each activation, so persistent settings changes should be committed to that repository before rebuilding this configuration.
-
-Docker Sandboxes is independent of OrbStack's Docker engine. Authenticate its standalone `sbx` CLI and OpenAI access on the host:
+Docker Sandboxes (`sbx`) is independent of OrbStack and does not require Docker Desktop or a host Docker Engine. It runs each agent in its own microVM with a private Docker daemon.
 
 ```sh
 sbx login
 sbx secret set openai --oauth
-```
-
-Then run Codex for a project from that project's directory:
-
-```sh
+cd ~/path/to/project
 sbx run codex
 ```
 
-`sbx` runs Codex in its own isolated microVM and stores the OpenAI credentials in the macOS keychain. OrbStack remains the Docker and Compose runtime outside these agent sandboxes.
+OrbStack's images, containers, networks, and cache are separate from each `sbx` microVM.
 
-## Expected System Behavior
+## Runtime and Agent Setup
 
-The configuration also:
-
-- enables the macOS application firewall, stealth mode, and automatic system and security updates
-- enables Touch ID for `sudo`, including detached Herdr terminal sessions
-- installs Rosetta 2 when it is missing
-- moves the Dock to the left, hides it automatically, and sets the declared Dock app shortcuts
-- keeps the standard Command and Option key mapping
-- reserves `Command-Space` for Raycast and the standard screenshot shortcuts for CleanShot X
-
-## Development Tools
-
-The configured workflow is centered on agentic coding:
-
-- Cursor desktop and CLI as the primary coding workspace
-- Bare terminal Vim for `EDITOR`, `VISUAL`, Git commits, and other interactive prompts
-- ChatGPT desktop app
-- OpenAI Codex and Pi coding-agent CLIs
-- Plannotator for local plan annotation and code review in Amp, Codex, and Pi
-- Docker Sandboxes for running Codex in isolated microVMs and OrbStack for regular Docker and Compose workloads
-- Herdr terminal multiplexer for persistent agent sessions
-- mise with Node LTS as the only global runtime and Aube with its shell shims as the package manager
-
-Neovim, other additional editors, and Claude tooling are intentionally not installed.
-
-## Add or Remove Software
-
-Ask an agent to make configuration changes rather than installing managed software manually:
-
-- Add macOS applications and Homebrew casks in `homebrew.nix`.
-- Add Nix-managed command-line tools in `home.nix`.
-- Add global language runtimes in `programs.mise.globalConfig.tools` in `home.nix`. Node LTS is intentionally the only global runtime today.
-- Add Setapp subscription apps to Setapp Favorites, not Homebrew, so Setapp continues to own their licenses and updates.
-- Record browser extensions, sign-ins, permissions, and other interactive setup in this README.
-
-Because Homebrew cleanup is enabled, a formula or cask installed manually but not declared in `homebrew.nix` is removed by the next activation.
-
-## Update Software
-
-Ask an agent to handle updates deliberately:
-
-- Re-run the one-line installer to fast-forward a clean `main` checkout and apply already-committed configuration and lock-file updates.
-- Update `flake.lock` in a separate commit after reviewing current nix-darwin, Home Manager, nix-homebrew, and Nixpkgs changes.
-- Verify every Homebrew cask still exists under its declared name; Homebrew occasionally renames casks.
-- Let GUI applications with built-in updaters manage their routine releases. System activation intentionally does not force every Homebrew app to upgrade.
-- Update the global Node LTS and Aube installations with `mise upgrade` when desired.
-- Never change `system.stateVersion` or `home.stateVersion` during a routine update.
-
-## Validate and Apply Changes
-
-Evaluate and build changes without activating them:
+New Zsh sessions activate mise first and then Aube. Aube creates project-aware shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`; projects keep their existing supported lockfile format.
 
 ```sh
-nix fmt
-nix flake check --no-update-lock-file --show-trace
-nix build --no-link --no-update-lock-file '.#darwinConfigurations.Josephs-MacBook-Pro.system'
+node --version
+npm --version
+aube --version
+pi --version
+mise doctor
+```
+
+Pi has an explicit writable setting equivalent to:
+
+```json
+{"npmCommand":["mise","exec","node@lts","--","npm"]}
+```
+
+That setting is why Pi package installation still finds real npm when Pi starts from a GUI, Herdr, or another child-process context. It does not depend only on an interactive shell alias.
+
+The installer clones these public repositories into `~/.local/share` and fast-forwards them on later runs:
+
+- [`joseph-lozano/skills`](https://github.com/joseph-lozano/skills), flattened into `~/.agents/skills` with per-skill links;
+- [`joseph-lozano/pi`](https://github.com/joseph-lozano/pi), used for static Pi instructions, extensions, theme, and extension dependencies.
+
+Pi credentials, sessions, `settings.json`, npm/git package stores, caches, and runtime files remain local and writable. The source repository's whole-directory `setup.sh` is intentionally not used because it would mix mutable state into the config checkout.
+
+## Expected macOS Behavior
+
+The setup:
+
+- enables the application firewall, stealth mode, and automatic system/security updates;
+- enables Touch ID for `sudo` and installs `pam-reattach` before `pam_tid` for local multiplexed terminal sessions; SSH sessions correctly fall back to password authentication;
+- installs Rosetta 2 if missing;
+- moves the Dock to the left, enables auto-hide, hides recents, and installs the selected Dock apps;
+- keeps standard Command and Option behavior and clears stale HID remaps;
+- reserves `Command-Space` for Raycast; and
+- reserves Apple's default screenshot shortcuts for CleanShot X.
+
+## Installed Workflow
+
+The development workflow is intentionally agent-first:
+
+- Cursor as the primary coding editor;
+- bare Vim for Git commits, rebases, and other terminal editing;
+- Amp, OpenAI Codex, and Pi as coding agents;
+- ChatGPT as the desktop AI client;
+- Herdr as the persistent terminal multiplexer;
+- Plannotator for Amp, Codex, and Pi plan/code review;
+- Docker Sandboxes for isolated agent execution and OrbStack for normal containers; and
+- mise with only Node LTS globally, with Aube as the npm-family package manager.
+
+Neovim, extra editors, Ollama, Claude tooling, Docker Desktop, VLC, Chrome Canary, Livebook, devenv, pre-commit, and gitmoji are intentionally absent.
+
+The complete GUI list is in [`Brewfile`](Brewfile). Setapp-owned apps are listed only in the interactive checklist because installing standalone copies would bypass Setapp.
+
+## Updates and Changes
+
+Rerun the one-line installer to update the repository and every managed owner:
+
+- `brew bundle` upgrades declared formulae and casks;
+- official installers update Amp, Codex, mise, and Plannotator;
+- mise refreshes Node LTS and Aube;
+- npm refreshes Pi;
+- Pi refreshes `pi-cursor-sdk` and the Plannotator extension; and
+- the public skills and Pi config checkouts fast-forward to `main`.
+
+`amp update` also works independently because `amp` resolves to the official writable installation, not a Nix or Homebrew package.
+
+Ask an agent to edit this repository for lasting changes:
+
+- add/remove conventional software in `Brewfile`;
+- change static shell, Git, SSH, or Ghostty config under `stow/`;
+- change system behavior in `scripts/macos.sh`;
+- change agent ownership or integrations in `scripts/agents.sh`; and
+- record interactive steps in this README.
+
+Removing an entry from `Brewfile` does not uninstall it automatically because cleanup is intentionally disabled. Review and uninstall the old package explicitly.
+
+## Validate Changes
+
+Run static checks from the repository:
+
+```sh
+sh -n install.sh
+bash -n scripts/*.sh
+shellcheck install.sh scripts/*.sh
 git diff --check
 ```
 
-After reviewing a successful build, activate it:
+On the Mac, verify the realized setup without changing it:
 
 ```sh
-sudo darwin-rebuild switch --flake '.#Josephs-MacBook-Pro'
+./scripts/verify.sh
+brew bundle check --file=./Brewfile
 ```
 
-After an intentional `nix flake update`, repeat the checks and build before activation.
+This Linux-hosted repository cannot execute or prove macOS defaults, PAM, Homebrew casks, or app permissions. Those are verified by the final Mac-side script and the interactive checklist.
