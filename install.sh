@@ -53,6 +53,10 @@ export PATH="$HOME/.local/bin:$HOME/.amp/bin:/opt/homebrew/bin:/opt/homebrew/sbi
 
 printf '%s\n' "Installing or upgrading Homebrew applications and tools..."
 brew update
+if brew list --cask firefox >/dev/null 2>&1; then
+  printf '%s\n' "Uninstalling Firefox..."
+  brew uninstall --cask firefox
+fi
 brew bundle install --file="$config_dir/Brewfile"
 
 /bin/bash "$config_dir/scripts/dotfiles.sh"
