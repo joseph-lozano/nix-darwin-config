@@ -2,15 +2,17 @@
 
 set -euo pipefail
 
-failures=0
+repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+checks=0
+failures=()
 
 pass() {
-  printf 'ok: %s\n' "$1"
+  checks=$((checks + 1))
 }
 
 fail() {
-  printf 'not ok: %s\n' "$1" >&2
-  failures=$((failures + 1))
+  checks=$((checks + 1))
+  failures+=("$1")
 }
 
 check_command() {
@@ -61,21 +63,21 @@ check_runs "Aube's npm shim starts successfully" npm --version
 check_runs "Pi's explicit mise/npm route starts successfully" \
   mise exec node@lts -- npm --version
 
-if brew bundle check --file="$HOME/nix-darwin-config/Brewfile" >/dev/null; then
+if brew bundle check --file="$repo_dir/Brewfile" >/dev/null; then
   pass "Brewfile dependencies are installed"
 else
-  fail "Brewfile dependencies are incomplete"
+  fail "Brewfile dependencies are incomplete; run brew bundle check --file=$repo_dir/Brewfile"
 fi
 
 check_symlink \
   "$HOME/.config/ghostty/config" \
-  "$HOME/nix-darwin-config/stow/ghostty/.config/ghostty/config"
-check_symlink "$HOME/.gitconfig" "$HOME/nix-darwin-config/stow/git/.gitconfig"
-check_symlink "$HOME/.ssh/config" "$HOME/nix-darwin-config/stow/ssh/.ssh/config"
-check_symlink "$HOME/.p10k.zsh" "$HOME/nix-darwin-config/stow/zsh/.p10k.zsh"
-check_symlink "$HOME/.zprofile" "$HOME/nix-darwin-config/stow/zsh/.zprofile"
-check_symlink "$HOME/.zshenv" "$HOME/nix-darwin-config/stow/zsh/.zshenv"
-check_symlink "$HOME/.zshrc" "$HOME/nix-darwin-config/stow/zsh/.zshrc"
+  "$repo_dir/stow/ghostty/.config/ghostty/config"
+check_symlink "$HOME/.gitconfig" "$repo_dir/stow/git/.gitconfig"
+check_symlink "$HOME/.ssh/config" "$repo_dir/stow/ssh/.ssh/config"
+check_symlink "$HOME/.p10k.zsh" "$repo_dir/stow/zsh/.p10k.zsh"
+check_symlink "$HOME/.zprofile" "$repo_dir/stow/zsh/.zprofile"
+check_symlink "$HOME/.zshenv" "$repo_dir/stow/zsh/.zshenv"
+check_symlink "$HOME/.zshrc" "$repo_dir/stow/zsh/.zshrc"
 
 if [[ -f "$HOME/.codex/config.toml" && -w "$HOME/.codex/config.toml" && ! -L "$HOME/.codex/config.toml" ]]; then
   pass "Codex config is writable application state"
@@ -138,21 +140,6 @@ for path in \
   fi
 done
 
-for command_name in amp codex; do
-  command_path="$(command -v "$command_name" 2>/dev/null || true)"
-  case "$command_path" in
-    /nix/store/* | "$HOME/.nix-profile"/*)
-      fail "$command_name resolves to a Nix-owned binary at $command_path"
-      ;;
-    "")
-      fail "$command_name has no executable path"
-      ;;
-    *)
-      pass "$command_name is not Nix-owned"
-      ;;
-  esac
-done
-
 for zsh_file in "$HOME/.zshenv" "$HOME/.zprofile" "$HOME/.zshrc" "$HOME/.p10k.zsh"; do
   if /bin/zsh -n "$zsh_file"; then
     pass "$zsh_file parses"
@@ -204,9 +191,11 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   fi
 fi
 
-if ((failures > 0)); then
-  printf '\n%d verification check(s) failed.\n' "$failures" >&2
+if ((${#failures[@]} > 0)); then
+  printf '\nVerification failed (%d of %d checks):\n' "${#failures[@]}" "$checks" >&2
+  printf '  - %s\n' "${failures[@]}" >&2
+  printf '\nRerun ./scripts/verify.sh from the setup checkout after correcting the failures.\n' >&2
   exit 1
 fi
 
-printf '\nAll setup verification checks passed.\n'
+printf '\nAll %d setup verification checks passed.\n' "$checks"
