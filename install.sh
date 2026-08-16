@@ -40,6 +40,9 @@ if [ "${JOSEPH_MAC_SETUP_FROM_CHECKOUT:-0}" != "1" ]; then
 fi
 
 if [ ! -x /opt/homebrew/bin/brew ]; then
+  printf '%s\n' "Homebrew requires administrator access. Enter your macOS password when prompted."
+  /usr/bin/sudo -v || fail "administrator access is required to install Homebrew"
+
   printf '%s\n' "Installing Homebrew..."
   homebrew_installer="$(/usr/bin/curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   NONINTERACTIVE=1 /bin/bash -c "$homebrew_installer"
