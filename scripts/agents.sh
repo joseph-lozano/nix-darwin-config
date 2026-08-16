@@ -48,9 +48,10 @@ export PATH="$HOME/.local/bin:$HOME/.amp/bin:/opt/homebrew/bin:/opt/homebrew/sbi
 mkdir -p "$HOME/.local/bin" "$HOME/.local/share" "$HOME/.local/state"
 
 printf '%s\n' "Installing or updating Amp, Codex, and mise from their official installers..."
-curl -fsSL https://ampcode.com/install.sh | bash
-curl -fsSL https://chatgpt.com/codex/install.sh | sh
-curl -fsSL https://mise.run | sh
+curl --proto '=https' --tlsv1.2 -fsSL https://ampcode.com/install.sh | bash
+curl --proto '=https' --tlsv1.2 -fsSL https://chatgpt.com/codex/install.sh \
+  | CODEX_NON_INTERACTIVE=1 sh
+curl --proto '=https' --tlsv1.2 -fsSL https://mise.run | sh
 
 command -v mise >/dev/null 2>&1 || fail "mise was not found after installation"
 
@@ -59,6 +60,7 @@ mise settings add idiomatic_version_file_enable_tools node
 mise use --global node@lts aube@latest
 mise install
 mise exec node@lts -- npm install --global --ignore-scripts @earendil-works/pi-coding-agent
+mise reshim
 
 # Make mise tools and Aube's node/npm-family shims visible to this process and
 # every child process started during the remainder of setup.
@@ -133,11 +135,12 @@ rm "$skills_manifest_new"
 
 printf '%s\n' "Installing the current Plannotator release and selected integrations..."
 plannotator_version="$(
-  curl -fsSL https://api.github.com/repos/backnotprop/plannotator/releases/latest \
+  curl --proto '=https' --tlsv1.2 -fsSL \
+    https://api.github.com/repos/backnotprop/plannotator/releases/latest \
     | jq -er .tag_name
 )"
-curl -fsSL https://plannotator.ai/install.sh \
-  | bash -s -- --version "$plannotator_version" --minimal
+curl --proto '=https' --tlsv1.2 -fsSL https://plannotator.ai/install.sh \
+  | bash -s -- --version "$plannotator_version" --verify-attestation --minimal
 
 plannotator_source="$(mktemp -d)"
 trap 'rm -rf "$plannotator_source"' EXIT
@@ -156,7 +159,7 @@ done
 amp_plugin_dir="$HOME/.config/amp/plugins"
 amp_plugin_tmp="$(mktemp)"
 mkdir -p "$amp_plugin_dir"
-curl -fsSL \
+curl --proto '=https' --tlsv1.2 -fsSL \
   "https://raw.githubusercontent.com/backnotprop/plannotator/$plannotator_version/apps/amp-plugin/plannotator.ts" \
   -o "$amp_plugin_tmp"
 install -m 0644 "$amp_plugin_tmp" "$amp_plugin_dir/plannotator.ts"
@@ -174,20 +177,35 @@ codex_hooks="$HOME/.codex/hooks.json"
 [[ -s "$codex_hooks" ]] || printf '{}\n' >"$codex_hooks"
 codex_hooks_tmp="${codex_hooks}.tmp.$$"
 jq --arg command "$HOME/.local/bin/plannotator" '
-  def has_plannotator:
-    any(.hooks[]?;
+  def is_managed_plannotator:
       .type == "command" and
-      ((.command // "") == "plannotator" or ((.command // "") | endswith("/plannotator")))
-    );
+      ((.command // "") == "plannotator" or ((.command // "") | endswith("/plannotator")));
+  def is_custom_plannotator:
+      .type == "command" and
+      ((.command // "") | contains("plannotator")) and
+      (is_managed_plannotator | not);
   .hooks = (.hooks // {}) |
-  .hooks.Stop = (
-    [(.hooks.Stop // [])[] | select((has_plannotator) | not)] +
+  (.hooks.Stop // []) as $stop_hooks |
+  (any($stop_hooks[]?.hooks[]?; is_managed_plannotator)) as $had_managed |
+  (any($stop_hooks[]?.hooks[]?; is_custom_plannotator)) as $has_custom |
+  .hooks.Stop = ([
+    $stop_hooks[] |
+    ([.hooks[]? | select(is_managed_plannotator)] | length) as $managed_count |
+    if $managed_count == 0 then
+      .
+    else
+      .hooks = [.hooks[] | select((is_managed_plannotator) | not)] |
+      select((.hooks | length) > 0)
+    end
+  ] + if $had_managed or ($has_custom | not) then
     [{"hooks": [{
-      "type": "command",
-      "command": $command,
-      "timeout": 345600
+        "type": "command",
+        "command": $command,
+        "timeout": 345600
     }]}]
-  )
+  else
+    []
+  end)
 ' "$codex_hooks" >"$codex_hooks_tmp"
 mv "$codex_hooks_tmp" "$codex_hooks"
 
