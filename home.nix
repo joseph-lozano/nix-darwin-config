@@ -44,6 +44,11 @@ let
     )
   );
 
+  codexConfigFile = pkgs.writeText "codex-config.toml" ''
+    [features]
+    hooks = true
+  '';
+
   plannotator = pkgs.stdenvNoCC.mkDerivation {
     pname = "plannotator";
     version = "0.27.3";
@@ -93,10 +98,6 @@ in
           "${plannotator-source}/apps/skills/core/plannotator-review";
 
         ".codex/skills/herdr".source = "${pkgs.herdr}/share/herdr/skills/herdr";
-        ".codex/config.toml".text = ''
-          [features]
-          hooks = true
-        '';
         ".codex/hooks.json".text = builtins.toJSON {
           hooks.Stop = [
             {
@@ -160,6 +161,22 @@ in
       pkgs.zsh-powerlevel10k
     ];
   };
+
+  home.activation.initializeCodexConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    codex_dir="$HOME/.codex"
+    codex_config="$codex_dir/config.toml"
+    $DRY_RUN_CMD mkdir -p "$codex_dir"
+
+    if [[ -L "$codex_config" ]]; then
+      case "$(/usr/bin/readlink "$codex_config")" in
+        /nix/store/*) $DRY_RUN_CMD rm "$codex_config" ;;
+      esac
+    fi
+
+    if [[ ! -e "$codex_config" && ! -L "$codex_config" ]]; then
+      $DRY_RUN_CMD install -m 0644 ${codexConfigFile} "$codex_config"
+    fi
+  '';
 
   home.activation.installPiConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     pi_dir="$HOME/.pi/agent"
