@@ -52,7 +52,7 @@ fi
 
 for command_name in \
   amp aube brew codex delta direnv fastfetch fd ffmpeg gh git glow herdr \
-  jq mise node npm pi plannotator rg sbx stow tailscale vim yt-dlp zoxide; do
+  jq mise node npm pi plannotator rg sbx stow vim yt-dlp zoxide; do
   check_command "$command_name"
 done
 
