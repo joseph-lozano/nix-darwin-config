@@ -51,7 +51,7 @@ The last boundary is deliberate. `~/.codex/config.toml` must remain writable bec
 - [ ] Configure Time Machine and complete its first backup.
 - [ ] Sign in to 1Password. Under **Settings → Developer**, enable the SSH agent and **Integrate with 1Password CLI**. Under **Settings → Security**, enable Touch ID.
 - [ ] Run `op vault list`, `gh auth login`, and `ssh -T git@github.com`.
-- [ ] Run `amp`, `codex`, and `pi` once and complete each required sign-in. In Pi, use `/login` for the configured providers.
+- [ ] Run `amp`, `codex`, and `pi` once and complete each required sign-in. In Codex, run `/hooks`, review the Herdr and Plannotator commands, and trust them so Codex can run them. In Pi, use `/login` for the configured providers.
 
 ### Apps and permissions
 
@@ -66,7 +66,7 @@ The last boundary is deliberate. `~/.codex/config.toml` must remain writable bec
 9. **Postgres:** Open Postgres.app, initialize and start a local server, then connect TablePlus to it.
 10. **OrbStack:** Open it once and approve its helper. It owns normal Docker and Compose workloads; Docker Desktop is intentionally absent.
 11. **Rectangle Pro, Ghostty, ScreenFlow, and other apps:** Grant only the permissions needed for the desired features.
-12. **Plannotator:** Restart Amp or run `plugins: reload`, restart Codex Desktop, and restart Pi so their installed integration files load.
+12. **Plannotator:** Restart Amp or run `plugins: reload`, restart Codex Desktop, and restart Pi so their installed integration files load. If Codex reports changed hooks after an update, use `/hooks` to review and trust the new definitions.
 
 Setapp and most GUI apps do not synchronize every preference. Use each application's own settings sync or export when available.
 
@@ -85,7 +85,7 @@ OrbStack's images, containers, networks, and cache are separate from each `sbx` 
 
 ## Runtime and Agent Setup
 
-New Zsh sessions activate mise first and then Aube. Aube creates project-aware shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`; projects keep their existing supported lockfile format.
+Login Zsh sessions load mise's command shims, and interactive sessions then activate mise followed by Aube. Aube creates project-aware shims for `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, and `yarnpkg`; projects keep their existing supported lockfile format.
 
 ```sh
 node --version
