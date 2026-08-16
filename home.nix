@@ -56,6 +56,11 @@ let
       install -Dm755 "$src" "$out/bin/plannotator"
     '';
   };
+
+  piWithNpm = pkgs.writeShellScriptBin "pi" ''
+    export PATH=${lib.makeBinPath [ pkgs.nodejs ]}:$PATH
+    exec ${pkgs.pi-coding-agent}/bin/pi "$@"
+  '';
 in
 {
   imports = [
@@ -144,7 +149,7 @@ in
       pkgs.htop
       pkgs.jq
       pkgs.less
-      pkgs.pi-coding-agent
+      piWithNpm
       plannotator
       pkgs.tree
       pkgs.vim
