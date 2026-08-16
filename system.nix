@@ -68,8 +68,6 @@
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
 
-  system.keyboard = {
-    enableKeyMapping = true;
-    swapLeftCommandAndLeftAlt = true;
-  };
+  # Apply an empty mapping so activation also clears any stale modifier swap.
+  system.keyboard.enableKeyMapping = true;
 }

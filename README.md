@@ -179,7 +179,7 @@ The configuration also:
 - enables Touch ID for `sudo`, including detached Herdr terminal sessions
 - installs Rosetta 2 when it is missing
 - moves the Dock to the left, hides it automatically, and sets the declared Dock app shortcuts
-- swaps the left Command and left Option keys
+- keeps the standard Command and Option key mapping
 - reserves `Command-Space` for Raycast and the standard screenshot shortcuts for CleanShot X
 
 ## Development Tools
