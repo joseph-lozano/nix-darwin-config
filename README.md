@@ -68,8 +68,9 @@ The last boundary is deliberate. `~/.codex/config.toml` must remain writable bec
 9. **Postgres:** Open Postgres.app, initialize and start a local server, then connect TablePlus to it.
 10. **OrbStack:** Open it once and approve its helper. It owns normal Docker and Compose workloads; Docker Desktop is intentionally absent.
 11. **CodexBar:** Open it once, then in **Settings → Providers** enable Codex, Cursor, Amp, and any other signed-in sources you want in the menu bar. Tokens and provider state stay in CodexBar's own config.
-12. **Rectangle Pro, Ghostty, ScreenFlow, and other apps:** Grant only the permissions needed for the desired features.
-13. **Plannotator:** Restart Amp or run `plugins: reload`, restart Codex Desktop, and restart Pi so their installed integration files load. If Codex reports changed hooks after an update, use `/hooks` to review and trust the new definitions.
+12. **Grok Bot:** Open it once, sign in to the intended xAI account, and grant only the permissions needed for the teammates you want.
+13. **Rectangle Pro, Ghostty, ScreenFlow, and other apps:** Grant only the permissions needed for the desired features.
+14. **Plannotator:** Restart Amp or run `plugins: reload`, restart Codex Desktop, and restart Pi so their installed integration files load. If Codex reports changed hooks after an update, use `/hooks` to review and trust the new definitions.
 
 Setapp and most GUI apps do not synchronize every preference. Use each application's own settings sync or export when available.
 
@@ -139,6 +140,7 @@ The development workflow is intentionally agent-first:
 - bare Vim for Git commits, rebases, and other terminal editing;
 - Amp, OpenAI Codex, and Pi as coding agents;
 - ChatGPT as the desktop AI client;
+- Grok Bot as the xAI desktop client;
 - Herdr as the persistent terminal multiplexer;
 - Plannotator for Amp, Codex, and Pi plan/code review;
 - Docker Sandboxes for isolated agent execution and OrbStack for normal containers; and
