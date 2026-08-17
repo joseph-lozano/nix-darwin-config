@@ -46,6 +46,7 @@ The last boundary is deliberate. `~/.codex/config.toml` must remain writable bec
 ### Account and security
 
 - [ ] Sign in to the Apple Account and enable the desired iCloud services.
+- [ ] Set the computer name under **System Settings → General → About**, or run `sudo scutil --set ComputerName NAME`, `sudo scutil --set LocalHostName NAME`, and `sudo scutil --set HostName NAME`.
 - [ ] Install all pending macOS updates.
 - [ ] Enable and verify FileVault under **System Settings → Privacy & Security → FileVault**. Store the recovery key outside this repository.
 - [ ] Configure Time Machine and complete its first backup.
