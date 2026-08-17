@@ -116,6 +116,7 @@ Pi credentials, sessions, `settings.json`, npm/git package stores, caches, and r
 
 The setup:
 
+- sets Cloudflare DNS (`1.1.1.1` and `1.0.0.1`) on every network service;
 - enables the application firewall, stealth mode, and automatic system/security updates;
 - enables Touch ID for `sudo` and installs `pam-reattach` before `pam_tid` for local multiplexed terminal sessions; SSH sessions correctly fall back to password authentication;
 - installs Rosetta 2 if missing;

@@ -14,6 +14,11 @@ if ! /usr/bin/arch -x86_64 /usr/bin/true >/dev/null 2>&1; then
   sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 fi
 
+while IFS= read -r service; do
+  [[ -n "$service" ]] || continue
+  sudo /usr/sbin/networksetup -setdnsservers "$service" 1.1.1.1 1.0.0.1
+done < <(/usr/sbin/networksetup -listallnetworkservices | /usr/bin/tail -n +2 | /usr/bin/sed 's/^*//')
+
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
 
