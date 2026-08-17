@@ -67,8 +67,9 @@ The last boundary is deliberate. `~/.codex/config.toml` must remain writable bec
 8. **Chrome and Choosy:** Create `Personal` and `Work` Chrome profiles and sign in. Add both profiles to Choosy, make Choosy the default browser handler, and create the desired routing rules. Profile auth, cookies, extensions, and sync state stay browser-owned.
 9. **Postgres:** Open Postgres.app, initialize and start a local server, then connect TablePlus to it.
 10. **OrbStack:** Open it once and approve its helper. It owns normal Docker and Compose workloads; Docker Desktop is intentionally absent.
-11. **Rectangle Pro, Ghostty, ScreenFlow, and other apps:** Grant only the permissions needed for the desired features.
-12. **Plannotator:** Restart Amp or run `plugins: reload`, restart Codex Desktop, and restart Pi so their installed integration files load. If Codex reports changed hooks after an update, use `/hooks` to review and trust the new definitions.
+11. **CodexBar:** Open it once, then in **Settings → Providers** enable Codex, Cursor, Amp, and any other signed-in sources you want in the menu bar. Tokens and provider state stay in CodexBar's own config.
+12. **Rectangle Pro, Ghostty, ScreenFlow, and other apps:** Grant only the permissions needed for the desired features.
+13. **Plannotator:** Restart Amp or run `plugins: reload`, restart Codex Desktop, and restart Pi so their installed integration files load. If Codex reports changed hooks after an update, use `/hooks` to review and trust the new definitions.
 
 Setapp and most GUI apps do not synchronize every preference. Use each application's own settings sync or export when available.
 

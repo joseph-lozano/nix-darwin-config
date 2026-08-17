@@ -51,7 +51,7 @@ if command -v aube >/dev/null 2>&1; then
 fi
 
 for command_name in \
-  amp aube brew btop codex delta direnv fastfetch fd ffmpeg gh git glow herdr \
+  amp aube brew btop codex codexbar delta direnv fastfetch fd ffmpeg gh git glow herdr \
   jq mas mise node npm pi plannotator rg sbx starship stow tldr vim yt-dlp zoxide; do
   check_command "$command_name"
 done
