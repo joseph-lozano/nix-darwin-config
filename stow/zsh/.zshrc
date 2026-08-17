@@ -1,8 +1,3 @@
-# Enable Powerlevel10k instant prompt. Keep this near the top of ~/.zshrc.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 autoload -Uz compinit
 compinit
 
@@ -37,10 +32,9 @@ if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh --cmd cd)"
 fi
 
-if [[ -r /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
-  source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
 fi
-[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
 
 # Syntax highlighting must be sourced after other Zsh plugins and setup.
 if [[ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then

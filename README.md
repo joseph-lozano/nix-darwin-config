@@ -18,7 +18,7 @@ The same command handles both a fresh install and future updates. It:
 2. waits for Apple Command Line Tools installation when needed;
 3. clones this repository to `~/nix-darwin-config`, or fast-forwards an existing clean `main` checkout;
 4. installs Homebrew and installs or upgrades the [`Brewfile`](Brewfile);
-5. links genuinely static Git, SSH, Zsh, Powerlevel10k, and Ghostty files with Stow;
+5. links genuinely static Git, SSH, Zsh, Starship, and Ghostty files with Stow;
 6. installs Amp, Codex, mise, Node LTS, Aube, Pi, Plannotator, skills, and agent integrations using their supported ownership paths;
 7. applies the macOS security, keyboard, shortcut, and Dock settings; and
 8. runs [`scripts/verify.sh`](scripts/verify.sh) and fails if the expected setup is incomplete.

@@ -57,6 +57,10 @@ if brew list --cask firefox >/dev/null 2>&1; then
   printf '%s\n' "Uninstalling Firefox..."
   brew uninstall --cask firefox
 fi
+if brew list powerlevel10k >/dev/null 2>&1; then
+  printf '%s\n' "Uninstalling Powerlevel10k..."
+  brew uninstall powerlevel10k
+fi
 brew bundle install --file="$config_dir/Brewfile"
 
 /bin/bash "$config_dir/scripts/dotfiles.sh"

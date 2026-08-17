@@ -52,7 +52,7 @@ fi
 
 for command_name in \
   amp aube brew codex delta direnv fastfetch fd ffmpeg gh git glow herdr \
-  jq mise node npm pi plannotator rg sbx stow vim yt-dlp zoxide; do
+  jq mise node npm pi plannotator rg sbx starship stow vim yt-dlp zoxide; do
   check_command "$command_name"
 done
 
@@ -74,10 +74,12 @@ check_symlink \
   "$repo_dir/stow/ghostty/.config/ghostty/config"
 check_symlink "$HOME/.gitconfig" "$repo_dir/stow/git/.gitconfig"
 check_symlink "$HOME/.ssh/config" "$repo_dir/stow/ssh/.ssh/config"
-check_symlink "$HOME/.p10k.zsh" "$repo_dir/stow/zsh/.p10k.zsh"
 check_symlink "$HOME/.zprofile" "$repo_dir/stow/zsh/.zprofile"
 check_symlink "$HOME/.zshenv" "$repo_dir/stow/zsh/.zshenv"
 check_symlink "$HOME/.zshrc" "$repo_dir/stow/zsh/.zshrc"
+check_symlink \
+  "$HOME/.config/starship.toml" \
+  "$repo_dir/stow/starship/.config/starship.toml"
 
 if [[ -f "$HOME/.codex/config.toml" && -w "$HOME/.codex/config.toml" && ! -L "$HOME/.codex/config.toml" ]]; then
   pass "Codex config is writable application state"
@@ -140,7 +142,7 @@ for path in \
   fi
 done
 
-for zsh_file in "$HOME/.zshenv" "$HOME/.zprofile" "$HOME/.zshrc" "$HOME/.p10k.zsh"; do
+for zsh_file in "$HOME/.zshenv" "$HOME/.zprofile" "$HOME/.zshrc"; do
   if /bin/zsh -n "$zsh_file"; then
     pass "$zsh_file parses"
   else

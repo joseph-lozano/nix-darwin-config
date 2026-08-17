@@ -1,0 +1,161 @@
+# Starship Configuration
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Use custom format for a clean look
+format = """
+[╭─](bold blue)$username$hostname$directory$git_branch$git_status$bun$nodejs$python$rust$golang$elixir$docker_context$kubernetes$aws$gcloud$cmd_duration
+[╰─](bold blue)$character"""
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Cool character symbols
+[character]
+success_symbol = '[󰘧](bold green)'
+error_symbol = '[󰅙](bold red)'
+vimcmd_symbol = '[󰕷](bold yellow)'
+
+# Stylish username display
+[username]
+style_user = 'bold cyan'
+style_root = 'bold red'
+format = '[$user](bold cyan)[@](white)'
+disabled = false
+show_always = false
+
+# Hostname with cool styling
+[hostname]
+ssh_only = false
+format = '[$hostname](bold purple) '
+disabled = true
+
+# Directory with better truncation and styling
+[directory]
+style = 'bold blue'
+truncation_length = 4
+truncate_to_repo = true
+format = '[$path]($style)[$read_only]($read_only_style) '
+read_only = '󰌾'
+read_only_style = 'red'
+
+# Git branch with cooler icon
+[git_branch]
+symbol = '󰘬 '
+style = 'bold purple'
+format = 'on [$symbol$branch]($style) '
+truncation_length = 25
+
+# Enhanced git status with modern emojis
+[git_status]
+style = 'bold red'
+format = '([$all_status$ahead_behind]($style))'
+conflicted = '󰞇 '
+ahead = '󰜷${count} '
+behind = '󰜮${count} '
+diverged = '󰊢 '
+up_to_date = ''
+untracked = '󰋖${count} '
+stashed = '󰏗${count} '
+modified = '󰷈${count} '
+staged = '󰄬${count} '
+renamed = '󰑕${count} '
+deleted = '󰆴${count} '
+
+# Command duration with cooler styling
+[cmd_duration]
+min_time = 1_000
+format = 'took [$duration](bold yellow) '
+show_milliseconds = true
+style = 'bold yellow'
+
+# Node.js version display
+[nodejs]
+symbol = '󰎙 '
+style = 'bold green'
+format = 'via [$symbol($version)]($style) '
+
+# Bun version display
+[bun]
+symbol = '🍞 '
+style = 'bold orange'
+format = 'via [$symbol($version)]($style) '
+
+# Python version display
+[python]
+symbol = '󰌠 '
+style = 'bold yellow'
+format = 'via [$symbol$pyenv_prefix($version)]($style) '
+
+# Rust version display
+[rust]
+symbol = '󱘗 '
+style = 'bold red'
+format = 'via [$symbol($version)]($style) '
+
+# Go version display
+[golang]
+symbol = '󰟓 '
+style = 'bold cyan'
+format = 'via [$symbol($version)]($style) '
+
+# Elixir version display
+[elixir]
+symbol = '💧 '
+style = 'bold magenta'
+format = 'via [$symbol($version \\(OTP $otp_version\\))]($style) '
+
+# Docker context
+[docker_context]
+symbol = '󰡨 '
+style = 'bold blue'
+format = 'via [$symbol$context]($style) '
+
+# Kubernetes context
+[kubernetes]
+symbol = '󱃾 '
+style = 'bold blue'
+format = 'on [$symbol$context( \\($namespace\\))]($style) '
+disabled = false
+
+# AWS profile
+[aws]
+symbol = '󰸏 '
+style = 'bold orange'
+format = 'on [$symbol($profile)(\\($region\\))]($style) '
+
+# Google Cloud
+[gcloud]
+symbol = '󱇶 '
+style = 'bold blue'
+format = 'on [$symbol$account(@$domain)(\\($region\\))]($style) '
+
+# Battery indicator (for laptops)
+[battery]
+full_symbol = '󰁹'
+charging_symbol = '󰂄'
+discharging_symbol = '󰂃'
+format = '[$symbol$percentage]($style) '
+
+[[battery.display]]
+threshold = 15
+style = 'bold red'
+
+[[battery.display]]
+threshold = 50
+style = 'bold yellow'
+
+# Memory usage
+[memory_usage]
+disabled = false
+threshold = 70
+symbol = '󰍛 '
+style = 'bold dimmed red'
+format = 'via $symbol[$ram]($style) '
+
+# Disable some modules for a cleaner look
+[package]
+disabled = true
+
+[line_break]
+disabled = false
