@@ -4,6 +4,7 @@
 
 tap "docker/tap", trusted: { cask: "sbx" }
 
+brew "btop"
 brew "curl"
 brew "direnv"
 brew "dockutil"
@@ -18,10 +19,12 @@ brew "herdr"
 brew "htop"
 brew "jq"
 brew "less"
+brew "mas"
 brew "pam-reattach"
 brew "ripgrep"
 brew "starship"
 brew "stow"
+brew "tlrc"
 brew "tree"
 brew "vim"
 brew "wget"
