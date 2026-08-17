@@ -128,6 +128,21 @@ add_login_item "/Applications/Rectangle Pro.app" false
 add_login_item "/Applications/1Password.app" true
 add_login_item "/Applications/Raycast.app" true
 
+remove_if_present() {
+  local path="$1"
+
+  if sudo /bin/test -e "$path"; then
+    sudo /bin/rm -rf "$path"
+  fi
+}
+
+remove_if_present /Applications/GarageBand.app
+remove_if_present "/Library/Application Support/GarageBand"
+remove_if_present "/Library/Audio/Apple Loops"
+remove_if_present /Applications/iMovie.app
+remove_if_present "/Library/Application Support/iMovie"
+remove_if_present "$HOME/Movies/iMovie Library.imovielibrary"
+
 settings_activator="/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings"
 if [[ -x "$settings_activator" ]]; then
   "$settings_activator" -u
