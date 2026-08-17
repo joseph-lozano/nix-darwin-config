@@ -19,7 +19,7 @@ The workflow is agent-first: Cursor is the primary coding editor, bare Vim handl
 - `install.sh` owns the idempotent install-or-update entry point. It validates the machine, converges a clean `main` checkout, installs Homebrew, and delegates to the scripts.
 - `scripts/dotfiles.sh` links only the static packages under `stow/`.
 - `scripts/agents.sh` owns official agent installers, mise's Node/Aube setup, public skills/Pi config synchronization, and surgical agent integrations.
-- `scripts/macos.sh` owns macOS defaults, firewall/update settings, Rosetta, Touch ID for sudo, keyboard mappings, symbolic hotkeys, and Dock contents.
+- `scripts/macos.sh` owns macOS defaults, firewall/update settings, Rosetta, Touch ID for sudo, keyboard mappings, symbolic hotkeys, login items, and Dock contents.
 - `scripts/verify.sh` checks the realized Mac after setup.
 - `stow/` contains static Git, SSH, Zsh, Starship, and Ghostty configuration.
 

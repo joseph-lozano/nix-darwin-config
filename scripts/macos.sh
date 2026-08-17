@@ -53,9 +53,35 @@ sudo /usr/bin/install -o root -g wheel -m 0444 "$pam_config" /etc/pam.d/sudo_loc
 /usr/bin/defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 /usr/bin/defaults write NSGlobalDomain InitialKeyRepeat -int 15
 /usr/bin/defaults write NSGlobalDomain KeyRepeat -int 2
+/usr/bin/defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+/usr/bin/defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+/usr/bin/defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+/usr/bin/defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+/usr/bin/defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+/usr/bin/defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+/usr/bin/defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+/usr/bin/defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+/usr/bin/defaults write com.apple.finder ShowPathbar -bool true
+/usr/bin/defaults write com.apple.finder ShowStatusBar -bool true
+/usr/bin/defaults write com.apple.finder AppleShowAllFiles -bool true
+/usr/bin/defaults write com.apple.finder FXDefaultSearchScope -string SCcf
+/usr/bin/defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+/usr/bin/defaults write com.apple.menuextra.battery ShowPercent -string YES
+/usr/bin/defaults write com.apple.controlcenter BatteryShowPercentage -bool true
 /usr/bin/defaults write com.apple.dock autohide -bool true
+/usr/bin/defaults write com.apple.dock autohide-delay -float 0
+/usr/bin/defaults write com.apple.dock autohide-time-modifier -float 0.5
 /usr/bin/defaults write com.apple.dock orientation -string left
+/usr/bin/defaults write com.apple.dock tilesize -int 48
 /usr/bin/defaults write com.apple.dock show-recents -bool false
+/usr/bin/defaults write com.apple.dock wvous-tl-corner -int 1
+/usr/bin/defaults write com.apple.dock wvous-tr-corner -int 1
+/usr/bin/defaults write com.apple.dock wvous-bl-corner -int 1
+/usr/bin/defaults write com.apple.dock wvous-br-corner -int 1
+/usr/bin/defaults write com.apple.dock wvous-tl-modifier -int 0
+/usr/bin/defaults write com.apple.dock wvous-tr-modifier -int 0
+/usr/bin/defaults write com.apple.dock wvous-bl-modifier -int 0
+/usr/bin/defaults write com.apple.dock wvous-br-modifier -int 0
 
 disable_symbolic_hotkey() {
   /usr/bin/defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
@@ -83,6 +109,19 @@ dockutil --add "/Applications/Safari.app" --no-restart
 dockutil --add "/Applications/Slack.app" --no-restart
 dockutil --add "/Applications/Discord.app" --no-restart
 dockutil --add "/System/Applications/System Settings.app" --no-restart
+
+add_login_item() {
+  local app_path="$1"
+  local hidden="$2"
+
+  if [[ -d "$app_path" ]]; then
+    osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"$app_path\", hidden:$hidden}" >/dev/null
+  fi
+}
+
+add_login_item "/Applications/Rectangle Pro.app" false
+add_login_item "/Applications/1Password.app" true
+add_login_item "/Applications/Raycast.app" true
 
 settings_activator="/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings"
 if [[ -x "$settings_activator" ]]; then

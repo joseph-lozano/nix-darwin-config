@@ -20,7 +20,7 @@ The same command handles both a fresh install and future updates. It:
 4. installs Homebrew and installs or upgrades the [`Brewfile`](Brewfile);
 5. links genuinely static Git, SSH, Zsh, Starship, and Ghostty files with Stow;
 6. installs Amp, Codex, mise, Node LTS, Aube, Pi, Plannotator, skills, and agent integrations using their supported ownership paths;
-7. applies the macOS security, keyboard, shortcut, and Dock settings; and
+7. applies the macOS security, Finder, keyboard, shortcut, login-item, and Dock settings; and
 8. runs [`scripts/verify.sh`](scripts/verify.sh) and fails if the expected setup is incomplete.
 
 The update path refuses to overwrite a dirty checkout or merge a divergent branch. Homebrew upgrades declared software but does **not** run destructive `brew bundle cleanup`, so unrelated software is not silently removed.
@@ -119,6 +119,10 @@ The setup:
 - enables Touch ID for `sudo` and installs `pam-reattach` before `pam_tid` for local multiplexed terminal sessions; SSH sessions correctly fall back to password authentication;
 - installs Rosetta 2 if missing;
 - moves the Dock to the left, enables auto-hide, hides recents, and installs the selected Dock apps;
+- shows Finder path and status bars, hidden files, and filename extensions;
+- disables smart quotes, auto-period, auto-capitalization, and hot corners;
+- enables tap-to-click and battery percentage;
+- adds Rectangle Pro, 1Password, and Raycast as login items;
 - keeps standard Command and Option behavior and clears stale HID remaps;
 - reserves `Command-Space` for Raycast; and
 - reserves Apple's default screenshot shortcuts for CleanShot X.
