@@ -13,3 +13,5 @@ path=(
   /opt/homebrew/sbin
   $path
 )
+
+[[ -r "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"

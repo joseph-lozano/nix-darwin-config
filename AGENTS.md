@@ -37,7 +37,7 @@ Keep behavior in its existing owner. Do not add a module or helper for a small o
 - Plannotator uses its minimal official installer because the full installer creates Claude-specific files. This repository separately installs only Amp, Codex, Pi, and shared-skill integrations.
 - Herdr owns its generated Pi/Codex integration files and mutable session/runtime state. It detects Amp without an installable Amp integration.
 - Setapp owns CleanShot X, TablePlus, In Your Face, and other subscription Favorites. Do not add standalone Homebrew copies that bypass Setapp licensing/updates.
-- Application data, sign-ins, secrets, caches, sessions, trust, browser profiles, and GUI preferences are never Stow-managed.
+- Application data, sign-ins, secrets, caches, sessions, trust, browser profiles, and GUI preferences are never Stow-managed. Local shell secrets live in `~/.zshenv.local`; the Stow-managed `.zshenv` sources that file when present.
 
 ## Change Policy
 

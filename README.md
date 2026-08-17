@@ -51,6 +51,7 @@ The last boundary is deliberate. `~/.codex/config.toml` must remain writable bec
 - [ ] Configure Time Machine and complete its first backup.
 - [ ] Sign in to 1Password. Under **Settings → Developer**, enable the SSH agent and **Integrate with 1Password CLI**. Under **Settings → Security**, enable Touch ID.
 - [ ] Run `op vault list`, `gh auth login`, and `ssh -T git@github.com`.
+- [ ] Create `~/.zshenv.local` with any local API keys. This file is not Stow-managed; login and non-interactive Zsh sessions source it from `.zshenv`.
 - [ ] Run `amp`, `codex`, and `pi` once and complete each required sign-in. In Codex, run `/hooks`, review the Herdr and Plannotator commands, and trust them so Codex can run them. In Pi, use `/login` for the configured providers.
 
 ### Apps and permissions
