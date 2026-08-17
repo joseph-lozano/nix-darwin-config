@@ -9,11 +9,18 @@ setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
 setopt SHARE_HISTORY
 
 function cheat() {
   command curl "cheat.sh/$1"
 }
+
+alias ll='ls -la'
+alias la='ls -A'
+alias ..='cd ..'
+alias ...='cd ../..'
 
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
@@ -29,6 +36,8 @@ if command -v direnv >/dev/null 2>&1; then
 fi
 
 if command -v zoxide >/dev/null 2>&1; then
+  export _ZO_ECHO=1
+  export _ZO_RESOLVE_SYMLINKS=1
   eval "$(zoxide init zsh --cmd cd)"
 fi
 
